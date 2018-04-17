@@ -5,8 +5,8 @@
 * [/api/v1/baz](#baz)
 
 ### /api/v1/blah
-**URL : ** `/api/v1/blah`
-**Method : ** `GET`
+#### URL : `/api/v1/blah`
+#### Method : `GET`
 
 ### Response
 ```json
