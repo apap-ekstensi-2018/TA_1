@@ -1,4 +1,6 @@
 */.mvn
+*/.metadata
+.metadata
 
 # ignore settings
 .settings
