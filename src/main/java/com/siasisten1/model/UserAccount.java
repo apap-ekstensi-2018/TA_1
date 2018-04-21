@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserAccount {
-	private String username,password,role;
+  private String username,password,role;
 }
