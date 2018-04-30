@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import com.siasisten1.dao.LowonganMapper;
 import com.siasisten1.model.Lowongan;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
-public class LowonganDatabase {
+public class LowonganDatabase implements LowonganService{
   @Autowired
   private LowonganMapper lowonganMapper;
 
@@ -30,5 +32,18 @@ public class LowonganDatabase {
   public Lowongan delete(int id){
     log.info("delete lowongan with id {}", id);
     return lowonganMapper.deleteById(id);
+  }
+
+  @Override
+  public void insert(Lowongan lowongan) {
+	log.info("insert lowongan to database");
+	lowonganMapper.insert(lowongan);
+  }
+
+  @Override
+  public void update(Lowongan lowongan) {
+	log.info("update lowongan dengan id {}", lowongan.getId());
+	lowonganMapper.update(lowongan);
+	
   }
 }

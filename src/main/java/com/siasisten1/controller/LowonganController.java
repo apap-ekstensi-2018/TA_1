@@ -1,6 +1,7 @@
 package com.siasisten1.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 
 public class LowonganController {

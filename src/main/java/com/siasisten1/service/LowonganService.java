@@ -8,4 +8,6 @@ public interface LowonganService {
   Lowongan getLowongan(int id);
   List<Lowongan> getLowongan();
   Lowongan delete(int id);
+  void insert(Lowongan lowongan);
+  void update(Lowongan lowongan);
 }

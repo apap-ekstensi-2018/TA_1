@@ -42,4 +42,17 @@ public interface LowonganMapper {
 
   @Delete("DELETE lowongan WHERE id = #{id}")
   Lowongan deleteById(int id);
+  
+  @Insert("INSERT INTO lowongan (id_matkul, is_open, jml_lowongan) VALUES ("
+		    + "#{lowongan.id_matkul},"
+		    + "#{lowongan.is_open},"
+		    + "#{lowongan.jml_lowongan})")
+  void insert(@Param("lowongan") Lowongan lowongan);
+
+  @Update("UPDATE lowongan SET "
+		    + "id_matkul=#{lowongan.id_matkul},"
+		    + "is_open=#{lowongan.is_open},"
+		    + "jml_lowongan=#{lowongan.jml_lowongan}"
+		    + " WHERE id=#{lowongan.id}")
+  void update(@Param("lowongan") Lowongan lowongan);
 }
