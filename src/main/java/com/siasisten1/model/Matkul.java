@@ -1,5 +1,7 @@
 package com.siasisten1.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Lowongan
+public class Matkul
 {
-  public static final String[] LIST_STATUS  = {"Ditutup", "Dibuka"};
   private int id;
-  private int id_matkul;
-  private boolean is_open;
-  private int jml_lowongan;
+  private String kode_matkul;
+  private String nama_matkul;
+  private List<Dosen> dosenList;
 }
