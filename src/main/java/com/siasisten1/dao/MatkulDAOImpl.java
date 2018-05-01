@@ -13,19 +13,20 @@ import com.siasisten1.model.Matkul;
 @Service
 public class MatkulDAOImpl implements MatkulDAO{
 
-	@Autowired
-	private RestTemplate restTemplate;
-	
-	@Override
-	public Matkul getMatkul(int id) {
-		Matkul matkul = restTemplate.getForObject("https://apap-fasilkom.herokuapp.com/api/matkul/view/id/"+id, Matkul.class);
-		return matkul;
-	}
+  @Autowired
+  private RestTemplate restTemplate;
 
-	@Override
-	public List<Matkul> getAllMatkul() {
-		ResponseEntity <Matkul[]> response = restTemplate.getForEntity("https://apap-fasilkom.herokuapp.com/api/matkul/viewall", Matkul[].class);
-		return Arrays.asList(response.getBody());
-	}
-	
+  private String url = "https://apap-fasilkom.herokuapp.com/api/matkul";
+
+  @Override
+  public Matkul getMatkul(int id_matkul) {
+    Matkul matkul = restTemplate.getForObject(url + "/view/id/" + id_matkul, Matkul.class);
+    return matkul;
+  }
+
+  @Override
+  public List<Matkul> getAllMatkul() {
+    ResponseEntity <Matkul[]> response = restTemplate.getForEntity(url + "/viewall", Matkul[].class);
+    return Arrays.asList(response.getBody());
+  }
 }

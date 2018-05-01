@@ -1,34 +1,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
   <head>
+    <div th:replace="shared/header :: navbar"></div>
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
   </head>
   <body>
-  	<form action="/lowongan/tambah" method="post" th:object="${lowongan}">
-  		<div>
-  			<label for="id_matkul">Mata Kuliah</label>
-  		</div>
-	   	<div>
-  			<select id="id_matkul" name="id_matkul" th:field="*{id_matkul}">
-  				<option th:each="matkul : ${listMatkul}" th:attr="selected=(*{id_matkul}==${matkul.getId()})" th:value="${matkul.getId()}" th:text="${matkul.getNama_matkul()}"></option>
-  			</select>
-  		</div>
-  		<div>
-  			<label for="is_open">Status</label>
-  		</div>
-		<div>
-  			<!-- <select id="is_open" name="is_open" th:field="*{is_open}">
-				<option th:each="status, i : ${listStatus}" th:attr="selected=(*{is_open}==${i.index})" th:value="${i.index}" th:text="${status}"></option>
-			</select> -->
-  		</div> 
-  		<div>
-  			<label for="jml_lowongan">Jumlah lowongan</label>
-  		</div>
-  		<div>
-  			<input type="text" name="jml_lowongan" th:field="*{jml_lowongan}"></input>
-  		</div>
-  		<div class="col-sm-3">
-			<button type="submit">Simpan</button>
-		</div>
-  	</form>
+    <form action="/lowongan/tambah" method="post" th:object="${lowongan}">
+      <div>
+        <label for="id_matkul">Mata Kuliah</label>
+      </div>
+      <div>
+        <select id="id_matkul" name="id_matkul" th:field="*{id_matkul}">
+          <option th:each="matkul : ${listMatkul}" th:attr="selected=(*{id_matkul}==${matkul.getId()})" th:value="${matkul.getId()}" th:text="${matkul.getNama_matkul()}"></option>
+        </select>
+      </div>
+      <div>
+        <label for="is_open">Status</label>
+      </div>
+      <div>
+        <!-- <select id="is_open" name="is_open" th:field="*{is_open}">
+          <option th:each="status, i : ${listStatus}" th:attr="selected=(*{is_open}==${i.index})" th:value="${i.index}" th:text="${status}"></option>
+          </select> -->
+      </div> 
+      <div>
+        <label for="jml_lowongan">Jumlah lowongan</label>
+      </div>
+      <div>
+        <input type="text" name="jml_lowongan" th:field="*{jml_lowongan}"></input>
+      </div>
+      <div class="col-sm-3">
+        <button type="submit">Simpan</button>
+      </div>
+    </form>
+
+    <div th:replace="shared/footer :: footer"></div>
+    <script type="text/javascript" charset="utf-8" src="/assets/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -5,7 +5,6 @@ import java.util.List;
 import com.siasisten1.model.Matkul;
 
 public interface MatkulDAO {
-	Matkul getMatkul(int id);
-	List<Matkul> getAllMatkul();
-
+  Matkul getMatkul(int id_matkul);
+  List<Matkul> getAllMatkul();
 }
