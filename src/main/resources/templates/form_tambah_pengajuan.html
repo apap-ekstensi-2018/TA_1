@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add student</title>
+</head>
+
+<body>
+	<h1 class="page-header">Problem Editor</h1>
+
+	<form action="/pengajuan/tambah/submit" method="post">
+		<div>
+			<label for="id_pengajuan">ID Pengajuan</label> <input type="text" name="id_pengajuan" />
+		</div>
+		<div>
+			<label for="id_lowongan">ID Lowongan</label> <input type="text" name="id_lowongan" />
+		</div>
+		<div>
+			<label for="username_mahasiswa">Username Mahasiswa</label> <input type="text" name="username_mahasiswa" />
+		</div>
+
+		<div>
+			<button type="submit" name="action" value="save">Save</button>
+		</div>
+	</form>
+
+</body>
+
+</html>
+

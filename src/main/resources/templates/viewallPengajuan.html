@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    </head>
+    <body>
+        <h1 align="center">All Pengajuan</h1>
+        
+        <table id="example" class="table table-bordered">
+	        <thead align="center">
+	            <tr>
+	                <th><h3>ID</h3></th>
+	                <th><h3>ID Lowongan</h3></th>
+	                <th><h3>Username Mahasiswa</h3></th>
+	                <th><h3>Status Pengajuan</h3></th>	                
+	            </tr>
+	        </thead>
+	        <tbody align="center">
+		        <tr th:each="pengajuan,iterationStatus: ${data_pengajuan}" th:class="${iterationStatus.odd} ? 'odd'">
+		        	<td><p th:text="${iterationStatus.count}">No. 1</p></td>
+		        	<td><p th:text="${pengajuan.id}">pengajuan ID</p></td>
+		        	<td><p th:text="${pengajuan.id_lowongan}">pengajuan ID lowongan</p></td>
+		        	<td><p th:text="${pengajuan.username_mahasiswa}">pengajuan Username Mahasiswa</p></td>
+		        	<td><p th:text="${pengajuan.is_accepted}">pengajuan Status</p></td>
+
+		        	<td><a th:href="'/pengajuan/hapus/' + ${pengajuan.id}">
+		        	<button type="button" class="btn btn-danger" name="action" value="delete">Delete</button></a> </td>
+
+		        </tr>
+	        </tbody>
+	        
+	    </table>
+    </body>
+</html>
