@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
+    	<title>Daftar Pengajuan</title>
+    	<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+	 	<link th:href="@{/main.css}" rel="stylesheet"/>
     </head>
     <body>
-        <h1 align="center">All Pengajuan</h1>
+        <h1 align="center">Daftar Pengajuan</h1>
         
         <table id="example" class="table table-bordered">
 	        <thead align="center">
@@ -30,4 +33,11 @@
 	        
 	    </table>
     </body>
+    <script th:src="@{/DataTables/datatables-1.10.16/js/jquery.dataTables.min.js}">
+	    $(document).ready(function() {
+	    $('#example').DataTable({
+    			stateSave: true
+    		});
+		} );
+	</script>
 </html>

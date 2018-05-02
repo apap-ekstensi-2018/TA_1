@@ -102,13 +102,19 @@ public class PengajuanController {
 	    }
 	    
 	    @RequestMapping(value = "/pengajuan/hapus/",method = RequestMethod.POST)
-	    public String deletePost (Model model, @RequestParam(value = "id_pengajuan", required = false) String id_pengajuan)
+	    public String deletePost (Model model, 
+	    		@RequestParam(value = "id_pengajuan", required = false) String id_pengajuan,
+	    		@RequestParam(value = "is_accepted", required = false) String is_accepted)
 	    {
 	        PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
 	    	if(pengajuan != null)
 	    	{
-	    		pengajuanDAO.deletePengajuan(id_pengajuan);
-	    		return "delete";
+	    		if(is_accepted.equals("2")) {
+		    		pengajuanDAO.deletePengajuan(id_pengajuan);
+		    		return "delete";
+	    		}else {
+		    		return "is_accepted";
+	    		}
 	    	} else {
 	    		model.addAttribute("id_pengajuan", id_pengajuan);
 	    		return "not-found";
