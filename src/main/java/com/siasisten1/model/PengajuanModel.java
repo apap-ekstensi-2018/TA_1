@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAccount {
-	private String username,password,role;
+public class PengajuanModel {
+	private String id,id_lowongan,username_mahasiswa,is_accepted;
 }
