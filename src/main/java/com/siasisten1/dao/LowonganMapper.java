@@ -23,25 +23,28 @@ public interface LowonganMapper {
     @Result(property="opened", column="is_open"),
     @Result(property="jumlah_lowongan", column="jml_lowongan"),
     @Result(property="prodi", column="id_matkul", one=@One(
-      select = "com.siasisten1.dao.MatkulDAOImpl.getMatkul",
+      select = "com.siasisten1.dao.Matakuliah.findById",
       fetchType = FetchType.LAZY))
   })
   List<Lowongan> getAllLowongan();
 
-  @Select("SELECT * FROM lowongan WHERE id = #{id}")
-  @Results(value = {
-    @Result(property="id", column="id"),
-    @Result(property="opened", column="is_open"),
-    @Result(property="jumlah_lowongan", column="jml_lowongan"),
-    @Result(property="prodi", column="id_matkul", one=@One(
-      select = "com.siasisten1.dao.MatkulDAOImpl.getMatkul",
-      fetchType = FetchType.LAZY))
-  })
+//  @Select("SELECT * FROM lowongan WHERE id = #{id}")
+//  @Results(value = {
+//    @Result(property="id", column="id"),
+//    @Result(property="opened", column="is_open"),
+//    @Result(property="jumlah_lowongan", column="jml_lowongan"),
+//    @Result(property="prodi", column="id_matkul", one=@One(
+//      select = "com.siasisten1.dao.Matakuliah.findById",
+//      fetchType = FetchType.LAZY))
+//  })
+//  Lowongan findById(int id);
+
+  @Select("select * FROM lowongan WHERE id = #{id}")
   Lowongan findById(int id);
 
   @Delete("DELETE lowongan WHERE id = #{id}")
   Lowongan deleteById(int id);
-
+  
   @Insert("INSERT INTO lowongan (id_matkul, is_open, jml_lowongan) VALUES ("
 		    + "#{lowongan.id_matkul},"
 		    + "#{lowongan.is_open},"

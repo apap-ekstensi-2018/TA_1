@@ -41,27 +41,40 @@ public class LowonganController {
   @RequestMapping("/lowongan/tambah")
   public String add(Model model) {
     List<Matkul> listMatkul = matkulDAO.getAllLowongan();
-    System.out.println("======INIIIIIIIIIIIIIIIIIII===="+listMatkul.get(0).getNama_matkul());
     model.addAttribute("lowongan", new Lowongan());
     model.addAttribute("listStatus", Lowongan.LIST_STATUS);
     model.addAttribute("listMatkul",listMatkul);
+    model.addAttribute("linkSubmit", "/lowongan/tambah");
     return "lowongan/form-add";
   }
 
   @RequestMapping(value="/lowongan/tambah", method=RequestMethod.POST)
   public String addSubmit(Model model, @ModelAttribute Lowongan lowongan) {
     lowonganDAO.insert(lowongan);
+    model.addAttribute("message", "Sukses! Berhasil menambah lowongan");
     return "lowongan/notif";
   }
 
   @RequestMapping("/lowongan/ubah/{id_lowongan}")
   public String update(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
-    return "lowongan/form-update";
+	Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
+	if(lowongan != null) {
+		List<Matkul> listMatkul = matkulDAO.getAllLowongan();
+	    model.addAttribute("lowongan", lowongan);
+	    model.addAttribute("listStatus", Lowongan.LIST_STATUS);
+	    model.addAttribute("listMatkul",listMatkul);
+	    model.addAttribute("linkSubmit", "/lowongan/ubah/submit");
+	    return "lowongan/form-update";
+	}else {
+		model.addAttribute("message", "Gagal! Lowongan tidak ditemukan");
+	    return "lowongan/notif";
+	}
   }
 
   @RequestMapping(value="/lowongan/ubah/submit", method=RequestMethod.POST)
   public String updateSubmit(Model model, @ModelAttribute Lowongan lowongan) {
     lowonganDAO.update(lowongan);
+    model.addAttribute("message", "Sukses! Berhasil mengubah lowongan");
     return "lowongan/notif";
   }
 }
