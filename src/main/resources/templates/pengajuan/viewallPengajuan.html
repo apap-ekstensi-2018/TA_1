@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    	<title>Daftar Pengajuan</title>
+    </head>
+    <body>
+    <div th:replace="fragments/fragment :: header"></div>
+        <h1 align="center">Daftar Pengajuan</h1>
+         <div class="table-responsive">
+	        <table class="table table-bordered table-striped" id="dd">
+	        <thead align="center">
+	            <tr>
+	            	<th><h3>No.</h3></th>
+	                <th><h3>ID</h3></th>
+	                <th><h3>ID Lowongan</h3></th>
+	                <th><h3>Username Mahasiswa</h3></th>
+	                <th><h3>Status Pengajuan</h3></th>	                
+	                <th><h3>Action</h3></th>	                
+	            </tr>
+	        </thead>
+	        <tbody align="center">
+		        <tr th:each="pengajuan,iterationStatus: ${data_pengajuan}" th:class="${iterationStatus.odd} ? 'odd'">
+		        	<td><p th:text="${iterationStatus.count}">No. 1</p></td>
+		        	<td><p th:text="${pengajuan.id}">pengajuan ID</p></td>
+		        	<td><p th:text="${pengajuan.id_lowongan}">pengajuan ID lowongan</p></td>
+		        	<td><p th:text="${pengajuan.username_mahasiswa}">pengajuan Username Mahasiswa</p></td>
+		        	<td><p th:text="${pengajuan.is_accepted}">pengajuan Status</p></td>
+
+		        	<td><a th:href="'/pengajuan/view/' + ${pengajuan.id}">
+		        	<button type="button" class="btn btn-danger" name="action">Detail</button></a> </td>
+		        </tr>
+	        </tbody>
+	    </table>
+	    </div>
+	    <div th:replace="fragments/fragment :: footer"></div>
+    </body>
+</html>

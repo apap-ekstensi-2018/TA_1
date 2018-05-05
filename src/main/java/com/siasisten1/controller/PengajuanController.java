@@ -15,6 +15,7 @@ import com.siasisten1.model.PengajuanModel;
 import com.siasisten1.service.PengajuanService;
 
 @Controller
+@RequestMapping("pengajuan")
 public class PengajuanController {
 	
 	@Autowired
@@ -26,14 +27,14 @@ public class PengajuanController {
 	        return "index";
 	    }
 
-	    @RequestMapping("/pengajuan/tambah")
+	    @RequestMapping("/tambah")
 	    public String add ()
 	    {
-	        return "form_tambah_pengajuan";
+	        return "pengajuan/form_tambah_pengajuan";
 	    }
 
 
-	    @RequestMapping("/pengajuan/tambah/submit")
+	    @RequestMapping("/tambah/submit")
 	    public String addSubmit (
 	            @RequestParam(value = "id_pengajuan", required = false) String id_pengajuan,
 	            @RequestParam(value = "id_lowongan", required = false) String id_lowongan,
@@ -43,7 +44,7 @@ public class PengajuanController {
 	        PengajuanModel pengajuan = new PengajuanModel (id_pengajuan, id_lowongan, username_mahasiswa,status_pengajuan);
 	        pengajuanDAO.addPengajuan (pengajuan);
 
-	        return "success-add";
+	        return "pengajuan/success-add";
 	    }
 //
 //
@@ -62,7 +63,7 @@ public class PengajuanController {
 //	        }
 //	    }
 
-	    @RequestMapping(value = "/pengajuan/view/{id_pengajuan}",method = RequestMethod.GET)
+	    @RequestMapping(value = "/view/{id_pengajuan}",method = RequestMethod.GET)
 	    public String viewPath (Model model,
 	            @PathVariable(value = "id_pengajuan") String id_pengajuan)
 	    {
@@ -70,38 +71,38 @@ public class PengajuanController {
 
 	        if (pengajuan != null) {
 	            model.addAttribute ("pengajuan", pengajuan);
-	            return "viewPengajuan";
+	            return "pengajuan/viewPengajuan";
 	        } else {
 	            model.addAttribute ("id_pengajuan", id_pengajuan);
-	            return "not-found";
+	            return "pengajuan/not-found";
 	        }
 	    }
 
 
-	    @RequestMapping(value = "/pengajuan/viewall",method = RequestMethod.GET)
+	    @RequestMapping(value = "/viewall",method = RequestMethod.GET)
 	    public String view (Model model)
 	    {
 	        List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
 	        model.addAttribute ("data_pengajuan", data_pengajuan);
 
-	        return "viewallPengajuan";
+	        return "pengajuan/viewallPengajuan";
 	    }
 
-	    @RequestMapping(value = "/pengajuan/hapus/{id_pengajuan}",method = RequestMethod.GET)
+	    @RequestMapping(value = "/hapus/{id_pengajuan}",method = RequestMethod.GET)
 	    public String delete (Model model, @PathVariable(value = "id_pengajuan") String id_pengajuan)
 	    {
 	        PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
 	    	if(pengajuan != null)
 	    	{
 	    		pengajuanDAO.deletePengajuan(id_pengajuan);
-	    		return "delete";
+	    		return "pengajuan/delete";
 	    	} else {
 	    		model.addAttribute("id_pengajuan", id_pengajuan);
-	    		return "not-found";
+	    		return "pengajuan/not-found";
 	    	}
 	    }
 	    
-	    @RequestMapping(value = "/pengajuan/hapus/",method = RequestMethod.POST)
+	    @RequestMapping(value = "/hapus/",method = RequestMethod.POST)
 	    public String deletePost (Model model, 
 	    		@RequestParam(value = "id_pengajuan", required = false) String id_pengajuan,
 	    		@RequestParam(value = "is_accepted", required = false) String is_accepted)
@@ -117,7 +118,7 @@ public class PengajuanController {
 	    		}
 	    	} else {
 	    		model.addAttribute("id_pengajuan", id_pengajuan);
-	    		return "not-found";
+	    		return "pengajuan/not-found";
 	    	}
 	    }
 	    

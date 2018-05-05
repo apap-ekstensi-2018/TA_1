@@ -18,7 +18,7 @@ public class SecurityHandler implements AuthenticationSuccessHandler {
 		
 		System.out.println("ROLEX :"+roles.contains("ROLE_ADMIN"));
 		if (roles.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/admin");
+			response.sendRedirect("/pengajuan/viewall");
 		}
 	}
 }

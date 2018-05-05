@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>View Pengajuan by ID</title>
+    	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	    <script src="/js/jquery.min.js"></script>
+	    <script src="/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+    <div th:replace="fragments/fragment :: header"></div>
+    
+    	<h3 th:text="'Id = ' + ${pengajuan.id}">ID Pengajuan</h3>
+       	<h3 th:text="'Id_lowongan = ' + ${pengajuan.id_lowongan}">ID Lowongan</h3>
+       	<h3 th:text="'Username Mahasiswa = ' + ${pengajuan.username_mahasiswa}">Username Mahasiswa</h3>
+       	<h3 th:text="'Status = ' + ${pengajuan.is_accepted}">Status Pengajuan</h3>
+
+	<form action="/pengajuan/hapus/" method="post">
+		<div>
+			<input type="hidden" name="id_pengajuan" th:value="${pengajuan.id}" />
+			<input type="hidden" name="is_accepted" th:value="${pengajuan.is_accepted}" />
+		</div>
+	</form>
+					<a th:href="'/pengajuan/hapus/' + ${pengajuan.id}" method="POST" >
+		        	<button type="button" class="btn btn-primary" name="action" value="delete">Delete</button></a>
+    </body>
+</html>
+
