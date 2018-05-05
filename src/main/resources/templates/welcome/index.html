@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace"shared/header :: assets"> </head>
+
+  <body>
+    <h2>Welcome To Tutorial 08 APAP</h2>
+    <div th:replace="shared/header :: header"></div>
+    <a href="/login">Login</a><br/>
+    <!-- <a th:if="${#httpServLetRequest.isUserInRole('ADMIN')}" href="/student/viewall">View All Student</a><br/>  -->
+    <a th:if="${#httpServletRequest.isUserInRole('ADMIN')}" href="/student/viewall">View All Student</a><br/>
+    <a href="/student/viewform">View Student by NPM</a><br/> 
+    <div th:replace="shared/footer :: footer"></div>
+  </body>
+</html>

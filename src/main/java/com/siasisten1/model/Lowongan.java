@@ -15,4 +15,12 @@ public class Lowongan
   private int id_matkul;
   private int is_open;
   private int jml_lowongan;
+
+  private boolean opened;
+  public int jumlah_lowongan;
+
+  public String getStatus() {
+    System.out.println(is_open);
+    return is_open ? "Buka" : "Tutup";
+  }
 }

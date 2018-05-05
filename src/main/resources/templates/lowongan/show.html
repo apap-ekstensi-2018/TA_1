@@ -1,3 +1,39 @@
-<html>
-  <!-- should implemented -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="shared/header :: assets"> </head>
+  <body>
+    <div th:replace="shared/header :: navbar"></div>
+    <!-- table -->
+    <div class="container">
+      <div class="row">
+        <h2>Detail Lowongan</h2>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>ID Lowongan</td>
+                <td th:text="${lowongan.getId()}">1</td>
+              </tr>
+              <tr>
+                <td>Matakuliah</td>
+                <td th:text="${lowongan.getId()}">1</td>
+              </tr>
+              <tr>
+                <td>Status</td>
+                <td th:text="${lowongan.getStatus()}">Buka</td>
+              </tr>
+              <tr>
+                <td>Jumlah Lowongan</td>
+                <td th:text="${lowongan.jumlah_lowongan}">1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div th:replace="shared/footer :: footer"></div>
+  </body>
 </html>
