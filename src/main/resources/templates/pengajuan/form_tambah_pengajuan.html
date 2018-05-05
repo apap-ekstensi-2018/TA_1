@@ -6,24 +6,34 @@
 </head>
 
 <body>
-	<h1 class="page-header">Problem Editor</h1>
-
-	<form action="/pengajuan/tambah/submit" method="post">
-		<div>
-			<label for="id_pengajuan">ID Pengajuan</label> <input type="text" name="id_pengajuan" />
-		</div>
-		<div>
-			<label for="id_lowongan">ID Lowongan</label> <input type="text" name="id_lowongan" />
-		</div>
-		<div>
-			<label for="username_mahasiswa">Username Mahasiswa</label> <input type="text" name="username_mahasiswa" />
-		</div>
-
-		<div>
-			<button type="submit" name="action" value="save">Save</button>
-		</div>
-	</form>
-
+    <div th:replace="fragments/fragment :: header"></div>	    
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-md-8 col-md-offset-2">
+			        <h1 align="center">Tambah Pengajuan</h1>
+					<form th:action="@{${linkSubmit}}"  method="post">
+						<div class="form-group">
+							<label for="id_pengajuan">ID Pengajuan</label>
+							<input class="form-control" type="text" name="id_pengajuan" required="true"/>							
+						</div>
+						<div class="form-group">
+							<label for="id_lowongan">ID Lowongan</label>
+							<select class="form-control" name="id_lowongan" required="true">
+								<option th:each="lowongan : ${lowongan}" th:value="${lowongan.id}" th:text="${lowongan.id}"/>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="username_mahasiswa">Username Mahasiswa</label>
+							<input class="form-control" type="text" name="username_mahasiswa" required="true" th:value="${#httpServletRequest.remoteUser}" readonly="true"/>							
+						</div>
+						<div>
+							<button type="submit">Save</button>
+						</div>
+					</form>
+    			</div>
+    		</div>
+   		</div>
+    <div th:replace="fragments/fragment :: footer"></div>	    
 </body>
 
 </html>

@@ -28,6 +28,10 @@ public interface LowonganMapper {
   })
   List<Lowongan> getAllLowongan();
 
+  @Select("SELECT * FROM lowongan WHERE is_open = 1")
+  List<Lowongan> getAllBukaLowongan();
+
+  
 //  @Select("SELECT * FROM lowongan WHERE id = #{id}")
 //  @Results(value = {
 //    @Result(property="id", column="id"),

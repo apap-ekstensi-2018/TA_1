@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.siasisten1.model.Lowongan;
 import com.siasisten1.model.PengajuanModel;
+import com.siasisten1.service.LowonganService;
 import com.siasisten1.service.PengajuanService;
 
 @Controller
@@ -20,6 +22,10 @@ public class PengajuanController {
 	
 	@Autowired
 	PengajuanService pengajuanDAO;
+
+	@Autowired
+	LowonganService lowonganDAO;
+
 	
 	 @RequestMapping("/")
 	    public String index ()
@@ -28,22 +34,36 @@ public class PengajuanController {
 	    }
 
 	    @RequestMapping("/tambah")
-	    public String add ()
-	    {
+	    public String add (Model model)
+	    {	
+	    	List <Lowongan> lowongan = lowonganDAO.getBukaLowongan();
+	    	model.addAttribute("lowongan", lowongan);
+	        model.addAttribute("linkSubmit", "/pengajuan/tambah/submit");
+	        return "pengajuan/form_tambah_pengajuan";
+	    }
+
+	    @RequestMapping(value = "/cici",method = RequestMethod.POST)
+	    public String cici (Model model)
+	    {	
 	        return "pengajuan/form_tambah_pengajuan";
 	    }
 
 
-	    @RequestMapping("/tambah/submit")
+	    @RequestMapping(value = "/tambah/submit",method = RequestMethod.POST)
 	    public String addSubmit (
 	            @RequestParam(value = "id_pengajuan", required = false) String id_pengajuan,
 	            @RequestParam(value = "id_lowongan", required = false) String id_lowongan,
 	            @RequestParam(value = "username_mahasiswa", required = false) String username_mahasiswa,
 	    		@RequestParam(value = "is_accepted", required = false) String status_pengajuan)
 	    {
-	        PengajuanModel pengajuan = new PengajuanModel (id_pengajuan, id_lowongan, username_mahasiswa,status_pengajuan);
+//	    	System.out.println("dddddddd");
+//	    	String id_pengajuan = "122";
+//	    	String id_lowongan ="222";
+//	    	String username_mahasiswa = "dawdwa";
+//	    	String status_pengajuan = "1";
+	    	PengajuanModel pengajuan = new PengajuanModel (id_pengajuan, id_lowongan, username_mahasiswa,status_pengajuan);
 	        pengajuanDAO.addPengajuan (pengajuan);
-
+	        
 	        return "pengajuan/success-add";
 	    }
 //
@@ -68,6 +88,7 @@ public class PengajuanController {
 	            @PathVariable(value = "id_pengajuan") String id_pengajuan)
 	    {
 	        PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
+	        model.addAttribute("linkSubmit", "/pengajuan/hapus");
 
 	        if (pengajuan != null) {
 	            model.addAttribute ("pengajuan", pengajuan);
@@ -102,7 +123,7 @@ public class PengajuanController {
 	    	}
 	    }
 	    
-	    @RequestMapping(value = "/hapus/",method = RequestMethod.POST)
+	    @RequestMapping(value = "/hapus",method = RequestMethod.POST)
 	    public String deletePost (Model model, 
 	    		@RequestParam(value = "id_pengajuan", required = false) String id_pengajuan,
 	    		@RequestParam(value = "is_accepted", required = false) String is_accepted)
@@ -112,9 +133,9 @@ public class PengajuanController {
 	    	{
 	    		if(is_accepted.equals("2")) {
 		    		pengajuanDAO.deletePengajuan(id_pengajuan);
-		    		return "delete";
+		    		return "pengajuan/delete";
 	    		}else {
-		    		return "is_accepted";
+		    		return "pengajuan/is_accepted";
 	    		}
 	    	} else {
 	    		model.addAttribute("id_pengajuan", id_pengajuan);

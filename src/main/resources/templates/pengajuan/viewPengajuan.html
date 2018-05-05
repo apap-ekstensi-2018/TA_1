@@ -8,20 +8,42 @@
     </head>
     <body>
     <div th:replace="fragments/fragment :: header"></div>
-    
-    	<h3 th:text="'Id = ' + ${pengajuan.id}">ID Pengajuan</h3>
-       	<h3 th:text="'Id_lowongan = ' + ${pengajuan.id_lowongan}">ID Lowongan</h3>
-       	<h3 th:text="'Username Mahasiswa = ' + ${pengajuan.username_mahasiswa}">Username Mahasiswa</h3>
-       	<h3 th:text="'Status = ' + ${pengajuan.is_accepted}">Status Pengajuan</h3>
+     	<div class="container">
+    		<div class="row">
+    		
+		        <h1 align="center">Detail Pengajuan</h1>
+		        <table class="table">
+		        	<tbody>
+		        		<tr>
+		        			<th>ID Pengajuan</th><td th:text="${pengajuan.id}"></td>
+		        		</tr>
+		        		<tr>
+		        			<th>ID Lowongan</th><td th:text="${pengajuan.id_lowongan}"></td>
+		        		</tr>
+		        		<tr>
+		        			<th>Status</th><td th:text="${pengajuan.username_mahasiswa}"></td>
+		        		</tr>
+		        		<tr>
+		        			<th>Status</th><td th:text="${pengajuan.is_accepted}"></td>
+		        		</tr>
+		        	</tbody>
+		        </table>
+			
+				<form th:action="@{${linkSubmit}}"  method="post">
+					<div>
+						<input type="hidden" name="id_pengajuan" th:value="${pengajuan.id}" />
+						<input type="hidden" name="is_accepted" th:value="${pengajuan.is_accepted}" />
+					   	<button type="submit" class="btn btn-primary" name="action" value="submit">Delete</button></a>
+					</div>
+				</form>
 
-	<form action="/pengajuan/hapus/" method="post">
-		<div>
-			<input type="hidden" name="id_pengajuan" th:value="${pengajuan.id}" />
-			<input type="hidden" name="is_accepted" th:value="${pengajuan.is_accepted}" />
+<!--
+				<a th:href="'/pengajuan/hapus/' + ${pengajuan.id}" method="POST" >
+			   	<button type="button" class="btn btn-primary" name="action" value="delete">Delete</button></a>
+-->
+			</div>
 		</div>
-	</form>
-					<a th:href="'/pengajuan/hapus/' + ${pengajuan.id}" method="POST" >
-		        	<button type="button" class="btn btn-primary" name="action" value="delete">Delete</button></a>
+    <div th:replace="fragments/fragment :: footer"></div>
     </body>
 </html>
 
