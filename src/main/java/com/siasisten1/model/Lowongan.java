@@ -20,7 +20,6 @@ public class Lowongan
   public int jumlah_lowongan;
 
   public String getStatus() {
-    System.out.println(is_open);
-    return is_open ? "Buka" : "Tutup";
+    return is_open == 1 ? "Buka" : "Tutup";
   }
 }
