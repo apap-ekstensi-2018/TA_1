@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
+@RequestMapping("lowongan")
 public class LowonganController {
   @Autowired
   LowonganService lowonganDAO;
@@ -24,21 +25,21 @@ public class LowonganController {
   @Autowired
   MatkulService matkulDAO;
 
-  @RequestMapping("/lowongan/view/{id_lowongan}")
+  @RequestMapping("/view/{id_lowongan}")
   public String show(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
     Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
     model.addAttribute("lowongan", lowongan);
     return "lowongan/show";
   }
 
-  @RequestMapping("/lowongan/viewall")
+  @RequestMapping("/viewall")
   public String show(Model model) {
     List<Lowongan> lowongans = lowonganDAO.getLowongan();
     model.addAttribute("lowongans", lowongans);
     return "lowongan/index";
   }
 
-  @RequestMapping("/lowongan/tambah")
+  @RequestMapping("/tambah")
   public String add(Model model) {
     List<Matkul> listMatkul = matkulDAO.getAllLowongan();
     model.addAttribute("lowongan", new Lowongan());
@@ -48,14 +49,14 @@ public class LowonganController {
     return "lowongan/form-add";
   }
 
-  @RequestMapping(value="/lowongan/tambah", method=RequestMethod.POST)
+  @RequestMapping(value="/tambah", method=RequestMethod.POST)
   public String addSubmit(Model model, @ModelAttribute Lowongan lowongan) {
     lowonganDAO.insert(lowongan);
     model.addAttribute("message", "Sukses! Berhasil menambah lowongan");
     return "lowongan/notif";
   }
 
-  @RequestMapping("/lowongan/ubah/{id_lowongan}")
+  @RequestMapping("/ubah/{id_lowongan}")
   public String update(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
 	Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
 	if(lowongan != null) {
@@ -71,7 +72,7 @@ public class LowonganController {
 	}
   }
 
-  @RequestMapping(value="/lowongan/ubah/submit", method=RequestMethod.POST)
+  @RequestMapping(value="/ubah/submit", method=RequestMethod.POST)
   public String updateSubmit(Model model, @ModelAttribute Lowongan lowongan) {
     lowonganDAO.update(lowongan);
     model.addAttribute("message", "Sukses! Berhasil mengubah lowongan");
