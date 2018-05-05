@@ -21,24 +21,26 @@
 			  </button>
 			  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 			    <ul class="navbar-nav">
-			      <li class="nav-item">
-			        <a class="nav-link" th:href="'/lowongan/viewall'">Lowongan</a>
+				  <li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          Lowongan
+			        </a>
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			          <a class="dropdown-item" th:href="'/lowongan/viewall'">Viewall</a>
+			          <a class="dropdown-item" th:href="'/lowongan/tambah'">Tambah Pengajuan</a>
+			          <a class="dropdown-item" href="#">Something else here</a>
+			        </div>
 			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link" th:href="'/pengajuan/viewall'">Pengajuan</a>
-			      </li>
-<!--			      
 				  <li class="nav-item dropdown">
 			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			          Pengajuan
 			        </a>
 			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-			          <a class="dropdown-item" href="#">Viewall</a>
-			          <a class="dropdown-item" href="#">Another action</a>
+			          <a class="dropdown-item" th:href="'/pengajuan/viewall'">Viewall</a>
+			          <a class="dropdown-item" th:href="'/pengajuan/tambah'">Tambah Pengajuan</a>
 			          <a class="dropdown-item" href="#">Something else here</a>
 			        </div>
 			      </li>
--->	
   		      <li class="nav-item">
 		        <form   th:action = "@{/logout}"   method = "post">
 		          <input class = "btn btn-md btn-dark" type = "submit"   value = "Sign Out" />
