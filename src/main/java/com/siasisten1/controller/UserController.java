@@ -9,11 +9,11 @@ public class UserController {
 	 	@RequestMapping("/")
 	    public String index ()
 	    {
-	        return "";
+	        return "login";
 	    }
 
 		@RequestMapping("login")
-		public String login() {
+		public String login(){
 			return "login";
 		}
 

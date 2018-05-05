@@ -29,6 +29,12 @@ public class LowonganDatabase implements LowonganService{
   }
 
   @Override
+  public List<Lowongan> getBukaLowongan(){
+    log.info("get all lowongan available");
+    return lowonganMapper.getAllBukaLowongan();
+  }
+  
+  @Override
   public Lowongan delete(int id){
     log.info("delete lowongan with id {}", id);
     return lowonganMapper.deleteById(id);

@@ -7,6 +7,7 @@ import com.siasisten1.model.Lowongan;
 public interface LowonganService {
   Lowongan getLowongan(int id);
   List<Lowongan> getLowongan();
+  List<Lowongan> getBukaLowongan();
   Lowongan delete(int id);
   void insert(Lowongan lowongan);
   void update(Lowongan lowongan);
