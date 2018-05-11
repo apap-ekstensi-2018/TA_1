@@ -9,6 +9,9 @@ import com.siasisten1.service.LowonganService;
 import com.siasisten1.service.MatkulService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,8 @@ public class LowonganController {
   @RequestMapping("/view/{id_lowongan}")
   public String show(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
     Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
+    Matkul matkul = matkulDAO.getMatkul(lowongan.getIdMatkul());
+    model.addAttribute("matakuliah", matkul);
     model.addAttribute("lowongan", lowongan);
     return "lowongan/show";
   }
@@ -35,13 +40,22 @@ public class LowonganController {
   @RequestMapping("/viewall")
   public String show(Model model) {
     List<Lowongan> lowongans = lowonganDAO.getLowongan();
+    List<Matkul> matkuls = matkulDAO.getMatkul();
+
+    Map<Integer, Matkul> listMatkul = new HashMap<Integer, Matkul>();
+
+    for(Matkul m : matkuls){
+      listMatkul.put(new Integer(m.getId()), m);
+    }
+
     model.addAttribute("lowongans", lowongans);
+    model.addAttribute("matkuls", listMatkul);
     return "lowongan/index";
   }
 
   @RequestMapping("/tambah")
   public String add(Model model) {
-    List<Matkul> listMatkul = matkulDAO.getAllLowongan();
+    List<Matkul> listMatkul = matkulDAO.getMatkul();
     model.addAttribute("lowongan", new Lowongan());
     model.addAttribute("listStatus", Lowongan.LIST_STATUS);
     model.addAttribute("listMatkul",listMatkul);
@@ -60,7 +74,7 @@ public class LowonganController {
   public String update(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
 	Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
 	if(lowongan != null) {
-		List<Matkul> listMatkul = matkulDAO.getAllLowongan();
+		List<Matkul> listMatkul = matkulDAO.getMatkul();
 	    model.addAttribute("lowongan", lowongan);
 	    model.addAttribute("listStatus", Lowongan.LIST_STATUS);
 	    model.addAttribute("listMatkul",listMatkul);
