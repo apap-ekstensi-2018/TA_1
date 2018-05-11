@@ -17,8 +17,22 @@
                 <td th:text="${lowongan.getId()}">1</td>
               </tr>
               <tr>
+                <td>Kode Matakuliah</td>
+                <td th:text="${matakuliah.getKode_matkul()}">1234</td>
+              </tr>
+              <tr>
                 <td>Matakuliah</td>
-                <td th:text="${lowongan.getId()}">1</td>
+                <td th:text="${matakuliah.getNama_matkul()}">APAP</td>
+              </tr>
+              <tr>
+                <td>List Dosen</td>
+                <td>
+                  <ol>
+                  <li th:each="dosen, i : ${matakuliah.getDosenList()}">
+                    <p th:text="${dosen.getNama()} + ' [ ' + ${dosen.getNip()} + ' ] '">Satrio [12345678]</p>
+                  </li>
+                  </ol>
+                </td>
               </tr>
               <tr>
                 <td>Status</td>
@@ -30,6 +44,9 @@
               </tr>
             </tbody>
           </table>
+          <div class="col">
+            <a href='/lowongan/viewall' class="btn btn-secondary float-right">Back</a>
+          </div>
         </div>
       </div>
     </div>

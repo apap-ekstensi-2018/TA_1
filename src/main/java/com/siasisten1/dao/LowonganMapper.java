@@ -28,6 +28,7 @@ public interface LowonganMapper {
   @Select("SELECT * FROM lowongan WHERE id = #{id}")
   @Results(value = {
     @Result(property="id", column="id"),
+    @Result(property="id_matkul", column="id_matkul"),
     @Result(property="opened", column="is_open"),
     @Result(property="jumlah_lowongan", column="jml_lowongan")
   })

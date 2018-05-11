@@ -31,7 +31,7 @@ USE `si_asisten`;
 DROP TABLE IF EXISTS `lowongan`;
 
 CREATE TABLE `lowongan` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_matkul` int(11) NOT NULL,
   `is_open` tinyint(1) NOT NULL,
   `jml_lowongan` int(11) NOT NULL,
