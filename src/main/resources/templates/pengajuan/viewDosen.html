@@ -1,49 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>View Pengajuan by ID</title>
-    	<link rel="stylesheet" href="/css/bootstrap.min.css" />
-	    <script src="/js/jquery.min.js"></script>
-	    <script src="/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-    <div th:replace="fragments/fragment :: header"></div>
-     	<div class="container">
-    		<div class="row">
-    		
-		        <h1 align="center">Detail Pengajuan</h1>
-		        <table class="table">
-		        	<tbody>
-		        		<tr>
-		        			<th>ID Pengajuan</th><td th:text="${pengajuan.id}"></td>
-		        		</tr>
-		        		<tr>
-		        			<th>Lowongan Pengajuan</th><td th:text="${pengajuan.namaMatkul}"></td>
-		        		</tr>
-		        		<tr>
-		        			<th>Status</th><td th:text="${pengajuan.username_mahasiswa}"></td>
-		        		</tr>
-		        		<tr>
-		        			<th>Status</th><td th:text="${pengajuan.is_accepted}"></td>
-		        		</tr>
-		        	</tbody>
-		        </table>
-			
-				<form th:action="@{${linkSubmit}}"  method="post">
-					<div>
-						<input type="hidden" name="id_pengajuan" th:value="${pengajuan.id}" />
-						<input type="hidden" name="is_accepted" th:value="${pengajuan.is_accepted}" />
-					   	<button type="submit" class="btn btn-primary" name="action" value="submit">Delete</button></a>
-					</div>
-				</form>
+  <head th:replace="shared/header :: assets">
+  </head>
+  <body>
+    <div th:replace="shared/header :: navbar"></div>
+    <div class="container">
+      <div class="row">
 
-<!--
-				<a th:href="'/pengajuan/hapus/' + ${pengajuan.id}" method="POST" >
-			   	<button type="button" class="btn btn-primary" name="action" value="delete">Delete</button></a>
--->
-			</div>
-		</div>
-    <div th:replace="fragments/fragment :: footer"></div>
-    </body>
+        <h1 align="center">Detail Pengajuan</h1>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>ID Pengajuan</th><td th:text="${pengajuan.id}"></td>
+            </tr>
+            <tr>
+              <th>Lowongan Pengajuan</th><td th:text="${pengajuan.namaMatkul}"></td>
+            </tr>
+            <tr>
+              <th>Status</th><td th:text="${pengajuan.username_mahasiswa}"></td>
+            </tr>
+            <tr>
+              <th>Status</th><td th:text="${pengajuan.is_accepted}"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <form th:action="@{${linkSubmit}}"  method="post">
+          <div>
+            <input type="hidden" name="id_pengajuan" th:value="${pengajuan.id}" />
+            <input type="hidden" name="is_accepted" th:value="${pengajuan.is_accepted}" />
+            <button type="submit" class="btn btn-primary" name="action" value="submit">Delete</button></a>
+          </div>
+        </form>
+
+        <!--
+          <a th:href="'/pengajuan/hapus/' + ${pengajuan.id}" method="POST" >
+          <button type="button" class="btn btn-primary" name="action" value="delete">Delete</button></a>
+        -->
+      </div>
+    </div>
+    <div th:replace="shared/footer :: footer"></div>
+  </body>
 </html>
 

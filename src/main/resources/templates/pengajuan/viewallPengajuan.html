@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="shared/header :: assets"></head>
+  <head th:replace="shared/header :: assets"></head>
   <body>
     <div th:replace="shared/header :: navbar"></div>
     <div class="container">
       <div class="row">
-		
+
         <h1 align="center">Daftar Pengajuan</h1>
         <div class="col">
           <a href="/pengajuan/tambah/" class="btn btn-success float-right">Tambah</a>
         </div>
         <div class="table-responsive">
-        <a th:if="${is_accepted == 1}">
-        		<div class="alert alert-success" role="alert">
-  				Pengajuan telah disetujui
-			</div>
-		</a>
-        <a th:if="${is_rejected == 1}">
-        		<div class="alert alert-success" role="alert">
-  				Pengajuan telah ditolak
-			</div>
-        	</a>
+          <a th:if="${is_accepted == 1}">
+            <div class="alert alert-success" role="alert">
+              Pengajuan telah disetujui
+            </div>
+          </a>
+          <a th:if="${is_rejected == 1}">
+            <div class="alert alert-success" role="alert">
+              Pengajuan telah ditolak
+            </div>
+          </a>
           <table class="table table-bordered table-striped" id="dd">
             <thead align="center">
               <tr>
@@ -55,7 +55,7 @@
             </tbody>
           </table>
         </div>
-           		    
-	    <div th:replace="shared/footer :: footer"></div>
-    </body>
+
+        <div th:replace="shared/footer :: footer"></div>
+  </body>
 </html>

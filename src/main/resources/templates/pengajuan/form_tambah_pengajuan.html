@@ -2,32 +2,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
   <head th:replace="shared/header :: assets"></head>
-<body>
+  <body>
     <div th:replace="shared/header :: navbar"></div>	    
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-8 col-md-offset-2">
-			        <h1 align="center">Tambah Pengajuan</h1>
-					<form th:action="@{${linkSubmit}}"  method="post">
-						<div class="form-group">
-							<label for="id_lowongan">Lowongan</label>
-							<select class="form-control" name="id_lowongan" required="true">
-								<option th:each="lowongan : ${lowongan}" th:value="${lowongan.id}" th:text="${matkuls.get(lowongan.getIdMatkul()).getNama_matkul()}"/>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="username_mahasiswa">Username Mahasiswa</label>
-							<input class="form-control" type="text" name="username_mahasiswa" required="true" th:value="${#httpServletRequest.remoteUser}" readonly="true"/>							
-						</div>
-						<div>
-							<button type="submit">Save</button>
-						</div>
-					</form>
-    			</div>
-    		</div>
-   		</div>
-     <div th:replace="shared/footer :: footer"></div>   
-</body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 align="center">Tambah Pengajuan</h1>
+          <form th:action="@{${linkSubmit}}"  method="post">
+            <div class="form-group">
+              <label for="id_lowongan">Lowongan</label>
+              <select class="form-control" name="id_lowongan" required="true">
+                <option th:each="lowongan : ${lowongan}" th:value="${lowongan.id}" th:text="${matkuls.get(lowongan.getIdMatkul()).getNama_matkul()}"/>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="username_mahasiswa">Username Mahasiswa</label>
+              <input class="form-control" type="text" name="username_mahasiswa" required="true" th:value="${#httpServletRequest.remoteUser}" readonly="true"/>							
+            </div>
+            <div>
+              <button type="submit">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div th:replace="shared/footer :: footer"></div>   
+  </body>
 
 </html>
 

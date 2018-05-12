@@ -19,14 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.core.JsonParser.Feature;
-
 import com.siasisten1.service.AsdosService;
 import com.siasisten1.service.DosenService;
 import com.siasisten1.service.MahasiswaService;
@@ -97,7 +89,6 @@ public class UserController {
 		@RequestMapping("/daftarmatkul")
 		public String getMatkul(Model model,HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException 
 		{
-			//int checkAs = asdosDAO.checkAsdos(request.getRemoteUser());
 			if(request.isUserInRole("ROLE_ADMIN")){
 				Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
 				List<Matkul> matkulsResult = dosen.getMataKuliahList();

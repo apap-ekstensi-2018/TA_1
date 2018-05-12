@@ -23,60 +23,55 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception
-	{
-//		.antMatchers("/student/viewall").hasRole("ADMIN")
-//		.antMatchers("/student/view/**").hasAnyRole("USER","ADMIN")
-		http
-		.authorizeRequests()
-		.antMatchers("/").permitAll()
-		.antMatchers("/assets/**").permitAll()
-		.antMatchers("/lowongan/tambah").hasAuthority("ROLE_ADMIN")
-		.antMatchers("/lowongan/tambah/").hasAuthority("ROLE_ADMIN")
-		.antMatchers("/lowongan/ubah/**").hasAuthority("ROLE_ADMIN")
-		.antMatchers("/lowongan/hapus/**").hasAuthority("ROLE_ADMIN")
-		.antMatchers("/lowongan/review/**").hasAuthority("ROLE_ADMIN")
-		.antMatchers("/pengajuan/tambah/").hasAuthority("ROLE_USER")
-		.antMatchers("/pengajuan/hapus/**").hasAuthority("ROLE_USER")
-		.antMatchers("/pengajuan/review/**").hasAnyAuthority("ROLE_ADMIN")
-		.anyRequest().authenticated()
-		.and()
-		.formLogin()
-		.successHandler(new SecurityHandler())
-		.loginPage("/login")
-		.permitAll()
-		.and()
-		.logout()
-		.permitAll();
 		
-//		.antMatchers("/student/viewall").hasAuthority("ADMIN")
-//		.antMatchers("/student/view/**").hasAnyAuthority("USER","ADMIN")
-	}
-	
-	@Autowired
-	DataSource dataSource;
-	
-	@Autowired
-	public void configAuthentification(AuthenticationManagerBuilder auth) throws Exception{
-		auth.jdbcAuthentication().dataSource(dataSource)
-		.passwordEncoder(new BCryptPasswordEncoder())
-		.usersByUsernameQuery("select username, password, enabled from users where username = ?")
-		.authoritiesByUsernameQuery("select username, role from user_roles where username = ?");
-	}
-	
-	@SuppressWarnings("unchecked")
-	public PasswordEncoder passwordEncoder() {
-	    // This is the ID we use for encoding.
-		String id = "bcrypt";
-		@SuppressWarnings("rawtypes")
-		Map encoders = new HashMap<>();
-		encoders.put("bcrypt", new BCryptPasswordEncoder());
-		encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
-		encoders.put("scrypt", new SCryptPasswordEncoder());
-	   
-	    return new DelegatingPasswordEncoder(id, encoders);
-	}
+  @Override
+  protected void configure(HttpSecurity http) throws Exception
+  {
+    http
+      .authorizeRequests()
+      .antMatchers("/").permitAll()
+      .antMatchers("/assets/**").permitAll()
+      .antMatchers("/lowongan/tambah").hasAuthority("ROLE_ADMIN")
+      .antMatchers("/lowongan/tambah/").hasAuthority("ROLE_ADMIN")
+      .antMatchers("/lowongan/ubah/**").hasAuthority("ROLE_ADMIN")
+      .antMatchers("/lowongan/hapus/**").hasAuthority("ROLE_ADMIN")
+      .antMatchers("/lowongan/review/**").hasAuthority("ROLE_ADMIN")
+      .antMatchers("/pengajuan/tambah/").hasAuthority("ROLE_USER")
+      .antMatchers("/pengajuan/hapus/**").hasAuthority("ROLE_USER")
+      .antMatchers("/pengajuan/review/**").hasAnyAuthority("ROLE_ADMIN")
+      .antMatchers("/daftarmatkul/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+      .anyRequest().authenticated()
+      .and()
+      .formLogin()
+      .successHandler(new SecurityHandler())
+      .loginPage("/login")
+      .permitAll()
+      .and()
+      .logout()
+      .permitAll();
+  }
 
+  @Autowired
+  DataSource dataSource;
+
+  @Autowired
+  public void configAuthentification(AuthenticationManagerBuilder auth) throws Exception{
+    auth.jdbcAuthentication().dataSource(dataSource)
+      .passwordEncoder(new BCryptPasswordEncoder())
+      .usersByUsernameQuery("select username, password, enabled from users where username = ?")
+      .authoritiesByUsernameQuery("select username, role from user_roles where username = ?");
+  }
+
+  @SuppressWarnings("unchecked")
+  public PasswordEncoder passwordEncoder() {
+    // This is the ID we use for encoding.
+    String id = "bcrypt";
+    @SuppressWarnings("rawtypes")
+    Map encoders = new HashMap<>();
+    encoders.put("bcrypt", new BCryptPasswordEncoder());
+    encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+    encoders.put("scrypt", new SCryptPasswordEncoder());
+
+    return new DelegatingPasswordEncoder(id, encoders);
+  }
 }
