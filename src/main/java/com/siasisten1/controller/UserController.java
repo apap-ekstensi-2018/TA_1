@@ -98,7 +98,7 @@ public class UserController {
 		public String getMatkul(Model model,HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException 
 		{
 			//int checkAs = asdosDAO.checkAsdos(request.getRemoteUser());
-			if(request.isUserInRole("ROLE_ADMIN")) {
+			if(request.isUserInRole("ROLE_ADMIN")){
 				Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
 				List<Matkul> matkulsResult = dosen.getMataKuliahList();
 				model.addAttribute("matkuls", matkulsResult);
@@ -116,7 +116,7 @@ public class UserController {
 				}
 			
 				model.addAttribute("matkuls", matkulsResult);
-				return "asdos/daftarMatkul";
+				return "asdos/daftarmatkul";
 			}
 		}
 }
