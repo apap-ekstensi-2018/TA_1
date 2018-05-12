@@ -9,7 +9,7 @@
         <div class="col">
           <h2>Data Lowongan</h2>
         </div>
-        <div class="col">
+        <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}" class="col">
           <a href="/lowongan/tambah/" class="btn btn-success float-right">Tambah</a>
         </div>
       </div>
@@ -28,7 +28,7 @@
             <td th:text="${matkuls.get(lowongan.getIdMatkul()).getNama_matkul()}" class="text-left">APAP</td>
             <td th:text="${lowongan.jumlah_lowongan}" class="text-left">0</td>
             <td>
-              <a th:href="'/lowongan/ubah/' + ${lowongan.getId()}" class="btn btn-light mx-2 float-right">Edit</a>
+              <a th:href="'/lowongan/ubah/' + ${lowongan.getId()}" th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}" class="btn btn-light mx-2 float-right">Edit</a>
               <a th:href="'/lowongan/view/' + ${lowongan.getId()}" class="btn btn-secondary mx-2 float-right">Detail</a>
             </td>
           </tr>

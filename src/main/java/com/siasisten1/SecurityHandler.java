@@ -16,13 +16,13 @@ public class SecurityHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException  {
 		Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 		
-		System.out.println("ROLEX :"+roles.contains("ROLE_STUDENT"));
-		if (roles.contains("ROLE_STUDENT")) {
+		System.out.println("ROLEX :"+roles.contains("ROLE_ADMIN"));
+		if (roles.contains("ROLE_ADMIN")) {
 			response.sendRedirect("/pengajuan/viewall");
 		}
 
-		System.out.println("ROLEX :"+roles.contains("ROLE_LECTURE"));
-		if (roles.contains("ROLE_LECTURE")) {
+		System.out.println("ROLEX :"+roles.contains("ROLE_USER"));
+		if (roles.contains("ROLE_USER")) {
 			response.sendRedirect("/pengajuan/viewall");
 		}
 
