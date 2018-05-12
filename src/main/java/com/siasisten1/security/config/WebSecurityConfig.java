@@ -47,6 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.and()
 		.logout()
 		.permitAll();
+		
+//		.antMatchers("/student/viewall").hasAuthority("ADMIN")
+//		.antMatchers("/student/view/**").hasAnyAuthority("USER","ADMIN")
 	}
 	
 	@Autowired

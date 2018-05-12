@@ -211,11 +211,21 @@ public class PengajuanController {
 	    		    System.out.println("Rev Val :" + reviewValue);
 
 	    		    if(reviewValue == 1) {
+	    		    	 	List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
+	    			    model.addAttribute ("data_pengajuan", data_pengajuan);
+	    			    model.addAttribute("reviewLink", "/pengajuan/review");
 	    		    		model.addAttribute("id_pengajuan", id_pengajuan);
-	    		    		return "pengajuan/accepted";
+	    		    		model.addAttribute("is_accepted", 1);
+	    		    		model.addAttribute("is_rejected", 0);
+	    		    		return "pengajuan/viewallPengajuan";
 	    		    }else {
+	    		    	 	List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
+	    			    model.addAttribute ("data_pengajuan", data_pengajuan);
+	    			    model.addAttribute("reviewLink", "/pengajuan/review");
 	    		    		model.addAttribute("id_pengajuan", id_pengajuan);
-	    		    		return "pengajuan/rejected";
+	    		    		model.addAttribute("is_accepted", 0);
+	    		    		model.addAttribute("is_rejected", 1);
+	    		    		return "pengajuan/viewallPengajuan";
 	    		    }
 	    		} else {
 	    			model.addAttribute("id_pengajuan", id_pengajuan);
@@ -230,17 +240,17 @@ public class PengajuanController {
 	    {
 	        PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
 	    		if(pengajuan != null)
-	    	{
-	    		if(is_accepted.equals("2")) {
-		    		pengajuanDAO.deletePengajuan(id_pengajuan);
-		    		return "pengajuan/delete";
-	    		}else {
-		    		return "pengajuan/is_accepted";
-	    		}
-	    	} else {
-	    		model.addAttribute("id_pengajuan", id_pengajuan);
-	    		return "pengajuan/not-found";
-	    	}
+	    		{
+	    			if(is_accepted.equals("2")) {
+	    				pengajuanDAO.deletePengajuan(id_pengajuan);
+	    				return "pengajuan/delete";
+	    			}else {
+	    				return "pengajuan/is_accepted";
+	    			}
+	    			} else {
+	    				model.addAttribute("id_pengajuan", id_pengajuan);
+	    				return "pengajuan/not-found";
+	    			}
 	    }
 
 //	    @RequestMapping("/Pengajuan/update/{npm}")

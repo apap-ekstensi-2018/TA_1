@@ -31,4 +31,9 @@ public class AsdosServiceImpl implements AsdosService{
 			System.out.println("masukkkkkksiniiiii=====");
 			return false;
 	}
+	
+	@Override
+	public int checkAsdos(String npm) {
+		return asdosMapper.checkAsdos(npm);
+	}
 }

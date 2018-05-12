@@ -3,50 +3,105 @@
     <head th:replace="shared/header :: assets"></head>
   <body>
     <div th:replace="shared/header :: navbar"></div>
-    <!-- table -->
-    <div class="container my-4">
-      <div class="row my-4">
-        <div class="col">
-          <h2>Data Pengajuan</h2>
-        </div>
+    <div class="container">
+      <div class="row">
+		
+        <h1 align="center">Daftar Pengajuan</h1>
         <div class="col">
           <a href="/pengajuan/tambah/" class="btn btn-success float-right">Tambah</a>
         </div>
-      </div>
-			         <div class="table-responsive">
-				        <table class="table table-bordered table-striped" id="dd">
-					        <thead align="center">
-					            <tr>
-					            	<th><a>No.</a></th>
-					                <!--th><a>ID</a></th-->
-					                <th><a>Lowongan</a></th>
-					                <th><a>Username Mahasiswa</a></th>
-					                <th><a>Status Pengajuan</a></th>	                
-					                <th><a>Action</a></th>	                
-					            </tr>
-					        </thead>
-					        <tbody align="center">
-						        <tr th:each="pengajuan,iterationStatus: ${data_pengajuan}" th:class="${iterationStatus.odd} ? 'odd'">
-						        	<td><p th:text="${iterationStatus.count}">No. 1</p></td>
-						        	<!--td><p th:text="${pengajuan.id}">pengajuan ID</p></td -->
-						        	<td><p th:text="${pengajuan.namaMatkul}">pengajuan nama MatKul</p></td>
-						        	<td><p th:text="${pengajuan.username_mahasiswa}">pengajuan Username Mahasiswa</p></td>
-						        	<td>
-					                  <div th:switch="${pengajuan.is_accepted}">
-					                    <p th:case="'2'"><button type="button" class="btn btn-warning" name="action">Pending</button></p>
-					                    <p th:case="'1'"><button type="button" class="btn btn-success" name="action">Disetujui</button></p>
-					                    <p th:case="'0'"><button type="button" class="btn btn-danger" name="action">Ditolak</button></p>
-					                  </div>
-						        	</td>
-				
-						        	<td><a th:href="'/pengajuan/view/' + ${pengajuan.id}">
-						        	<button type="button" class="btn btn-danger" name="action">Detail</button></a> </td>
-						        </tr>
-					        </tbody>
-					    </table>
-				    </div>
-				</div>
-			</div>		    		    
+        <div class="table-responsive">
+        <a th:if="${is_accepted == 1}">
+        		<div class="alert alert-success" role="alert">
+  				Pengajuan telah disetujui
+			</div>
+		</a>
+        <a th:if="${is_rejected == 1}">
+        		<div class="alert alert-success" role="alert">
+  				Pengajuan telah ditolak
+			</div>
+        	</a>
+          <table class="table table-bordered table-striped" id="dd">
+            <thead align="center">
+              <tr>
+                <th><a>No.</a></th>
+                <th><a>ID</a></th>
+                <th><a>ID Lowongan</a></th>
+                <th><a>Username Mahasiswa</a></th>
+                <th><a>Status Pengajuan</a></th>
+                <th><a>Action</a></th>
+                <th><a>Review</a></th>
+              </tr>
+            </thead>
+            <tbody align="center">
+              <tr th:each="pengajuan,iterationStatus: ${data_pengajuan}" th:class="${iterationStatus.odd} ? 'odd'">
+                <td><p th:text="${iterationStatus.count}">No. 1</p></td>
+                <td><p th:text="${pengajuan.id}">pengajuan ID</p></td>
+                <td><p th:text="${pengajuan.id_lowongan}">pengajuan ID lowongan</p></td>
+                <td><p th:text="${pengajuan.username_mahasiswa}">pengajuan Username Mahasiswa</p></td>
+                <td>
+                  <div th:switch="${pengajuan.is_accepted}">
+                    <p th:case="'2'"><button type="button" class="btn btn-warning" name="action">Pending</button></p>
+                    <p th:case="'1'"><button type="button" class="btn btn-success" name="action">Disetujui</button></p>
+                    <p th:case="'0'"><button type="button" class="btn btn-danger" name="action">Ditolak</button></p>
+                  </div>
+                  <!-- <p th:text="${pengajuan.is_accepted}">pengajuan Status</p> -->
+                </td>
+
+
+                <td><a th:href="'/pengajuan/view/' + ${pengajuan.id}">
+                    <button type="button" class="btn btn-danger" name="action">Detail</button></a> </td>
+
+                <td>
+                  <!-- <a th:href="'/review/' + ${pengajuan.id}"> -->
+                  <div th:switch="${pengajuan.is_accepted}">
+                    <div th:case="'2'">
+                    			<form th:action="@{${reviewLink}}"  method="post">
+                    				<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 0/>
+                    				<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
+                    				<button type="submit" class="btn btn-danger" name="action">Tolak</button>
+                  			</form>
+                  			
+                  			<form th:action="@{${reviewLink}}"  method="post">
+                    				<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 1/>
+                    				<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
+                    				<button type="submit" class="btn btn-success" name="action">Setujui</button>
+                  			</form>
+                    	</div>
+                    <div th:case="'1'">
+                    		<form th:action="@{${reviewLink}}"  method="post">
+                    			<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 0/>
+                    			<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
+                    			<button type="submit" class="btn btn-danger" name="action">Tolak</button>
+                  		</form>
+                    </div>
+                    <div th:case="'0'">
+                    		    <form th:action="@{${reviewLink}}"  method="post">
+                    				<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 1/>
+                    				<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
+                    				<button type="submit" class="btn btn-success" name="action">Setujui</button>
+                  			</form>
+                    </div>
+                  </div>
+                  
+                 <!--  <form th:action="@{${reviewLink}}"  method="post">
+                    <input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 0/>
+                    <input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
+                    <button type="submit" class="btn btn-danger" name="action">Tolak</button>
+                  </form>
+
+                  <a th:href="'/review/' + ${pengajuan.id}">
+                  <form th:action="@{${reviewLink}}"  method="post">
+                    <input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 1/>
+                    <input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
+                    <button type="submit" class="btn btn-success" name="action">Setujui</button>
+                  </form> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+           		    
 	    <div th:replace="shared/footer :: footer"></div>
     </body>
 </html>

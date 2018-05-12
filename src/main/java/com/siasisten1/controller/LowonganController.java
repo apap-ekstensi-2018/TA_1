@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.siasisten1.model.Ruang;
 import com.siasisten1.model.Matkul;
 import com.siasisten1.model.Lowongan;
+import com.siasisten1.service.AsdosService;
 import com.siasisten1.service.LowonganService;
 import com.siasisten1.service.MatkulService;
 import com.siasisten1.service.RuangService;
@@ -38,6 +39,7 @@ public class LowonganController {
 
   @Autowired
   RuangService ruangDAO;
+  
 
   @RequestMapping("/view/{id_lowongan}")
   public String show(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {

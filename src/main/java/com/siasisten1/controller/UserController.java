@@ -75,7 +75,7 @@ public class UserController {
 		@RequestMapping("/mata-kuliah/{id_mataKuliah}")
 		public String getAsdosMataKuliah(Model model, 
 				@PathVariable(value = "id_mataKuliah") int id_mataKuliah) throws IOException
-		{
+		{	
 			List<String> listNPM = asdosDAO.selectMataKuliahDiPegang(id_mataKuliah);
 			List<Mahasiswa> listMahasiswa = new ArrayList<>();
 						
@@ -89,11 +89,13 @@ public class UserController {
 		}
 		
 		@RequestMapping("/daftarmatkul")
-		public String getMatkul(Model model){
-			
+		public String getMatkul(Model model,HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException 
+		{
+			int checkAs = asdosDAO.checkAsdos(request.getRemoteUser());
+		
 			List<Matkul> matkuls = matkulDAO.getMatkul();
-			
 			model.addAttribute("matkuls", matkuls);
+			model.addAttribute("idAsdos", checkAs);
 			return "asdos/daftarMatkul";
 		}
 }

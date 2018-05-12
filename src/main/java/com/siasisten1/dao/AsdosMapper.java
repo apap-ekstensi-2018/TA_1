@@ -11,6 +11,9 @@ public interface AsdosMapper {
 	@Select("SELECT username_mahasiswa as npm from pengajuan JOIN lowongan ON lowongan.id = id_lowongan WHERE id_matkul = #{id_MataKuliah} AND is_accepted = 1")
 	List<String> selectMataKuliahDiPegang(@Param("id_MataKuliah") int id_MataKuliah);
 	
-	@Select("select * from pengajuan where username_mahasiswa= #{npm} and is_accepted=1")
+	@Select("select * as val from pengajuan where username_mahasiswa= #{npm} and is_accepted=1")
     PengajuanModel isAsdos(@Param("npm") String npm);
+	
+	@Select("select count(*) as val from pengajuan where username_mahasiswa= #{npm} and is_accepted=1")
+    int checkAsdos(@Param("npm") String npm);
 }
