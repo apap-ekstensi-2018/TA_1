@@ -114,7 +114,7 @@ public class UserController {
       }
 
       model.addAttribute("matkuls", matkulsResult);
-      return "asdos/daftarMatkul";
+      return "asdos/daftarmatkul";
     }
   }
 }

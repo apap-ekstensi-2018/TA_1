@@ -39,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
       .antMatchers("/pengajuan/tambah/").hasAuthority("ROLE_USER")
       .antMatchers("/pengajuan/hapus/**").hasAuthority("ROLE_USER")
       .antMatchers("/pengajuan/review/**").hasAnyAuthority("ROLE_ADMIN")
+      .antMatchers("/daftarmatkul/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
       .anyRequest().authenticated()
       .and()
       .formLogin()
@@ -73,5 +74,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     return new DelegatingPasswordEncoder(id, encoders);
   }
-
 }
