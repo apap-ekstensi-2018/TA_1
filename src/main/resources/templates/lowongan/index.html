@@ -1,13 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
-  </head>
+  <head th:replace="shared/header :: assets"></head>
   <body>
     <div th:replace="shared/header :: navbar"></div>
     <!-- table -->
     <div class="container my-4">
-      <div class="row">
+      <div class="row my-4">
         <div class="col">
           <h2>Data Lowongan</h2>
         </div>
@@ -15,7 +13,7 @@
           <a href="/lowongan/tambah/" class="btn btn-success float-right">Tambah</a>
         </div>
       </div>
-      <table class="table table-stripped" id="dd">
+      <table class="table table-stripped my-4" id="dd">
         <thead>
           <tr>
             <th>No</th>
@@ -39,6 +37,5 @@
     </div>
 
     <div th:replace="shared/footer :: footer"></div>
-    <script type="text/javascript" charset="utf-8" src="/assets/js/bootstrap.min.js"></script>
   </body>
 </html>

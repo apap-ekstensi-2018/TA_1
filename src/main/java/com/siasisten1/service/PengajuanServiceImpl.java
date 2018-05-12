@@ -42,6 +42,11 @@ public class PengajuanServiceImpl implements PengajuanService{
 		pengajuanMapper.deletePengajuan(id_pengajuan);			
 	}
 	
-	
+	@Override
+	public void updatePengajuan(String id_pengajuan, int reviewValue)
+	{
+		log.info("Review "+ id_pengajuan + " With Result "+ reviewValue);
+		pengajuanMapper.updatePengajuan(id_pengajuan, reviewValue);
+	}
 
 }

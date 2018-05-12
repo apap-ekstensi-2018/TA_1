@@ -2,12 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head th:fragment="assets">
     <title th:text="${title}"></title>
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/datatables.bootstrap.min.css" />
   </head>
 
   <body>
     <div th:fragment="navbar">
-      <nav class="navbar navbar-dark justify-content-between bg-dark">
+      <nav class="navbar navbar-dark navbar-expand-sm justify-content-between bg-dark" style="padding: .3rem 1rem; max-height: 56px">
         <a class="navbar-brand" href="/">SIASISTEN</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                                                      data-target="#navbarSupportedContent"
@@ -16,17 +18,17 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+        <div class="collapse navbar-collapse flex-row-reverse container" id="navbarSupportedContent">
+          <ul class="navbar-nav align-items-center">
             <li class="nav-item">
               <a class="nav-link" href="/lowongan/viewall">Lowongan</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/pengajuan/viewall">Pengajuan</a>
             </li>
-            <li class="nav-item">
-              <form   th:action = "@{/logout}"   method = "post">
-                <input class = "btn btn-md btn-dark" type = "submit"   value = "Sign Out" />
+            <li class="nav-item ">
+              <form th:action = "@{/logout}" method="post">
+                <input class = "btn btn-md btn-dark" type="submit" value="Sign Out" style="padding-top: 1rem"/>
               </form>
             </li>
           </ul>
