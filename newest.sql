@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `lowongan`
 --
 
+DROP TABLE IF EXISTS `lowongan`;
 CREATE TABLE `lowongan` (
   `id` int(11) NOT NULL,
   `id_matkul` int(11) NOT NULL,
@@ -43,6 +44,7 @@ INSERT INTO `lowongan` (`id`, `id_matkul`, `is_open`, `jumlah_lowongan`) VALUES
 -- Table structure for table `pengajuan`
 --
 
+DROP TABLE IF EXISTS `pengajuan`;
 CREATE TABLE `pengajuan` (
   `id` int(11) NOT NULL,
   `id_lowongan` int(11) NOT NULL,
@@ -65,6 +67,7 @@ INSERT INTO `pengajuan` (`id`, `id_lowongan`, `username_mahasiswa`, `is_accepted
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `username` varchar(45) NOT NULL,
   `password` varchar(250) NOT NULL,
@@ -86,6 +89,7 @@ INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
 -- Table structure for table `user_roles`
 --
 
+DROP TABLE IF EXISTS `user_roles`;
 CREATE TABLE `user_roles` (
   `user_role_id` int(11) NOT NULL,
   `username` varchar(45) NOT NULL,
