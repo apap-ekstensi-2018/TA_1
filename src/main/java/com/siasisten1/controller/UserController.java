@@ -19,14 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.core.JsonParser.Feature;
-
 import com.siasisten1.service.AsdosService;
 import com.siasisten1.service.DosenService;
 import com.siasisten1.service.MahasiswaService;
@@ -41,82 +33,88 @@ import com.siasisten1.model.Matkul;
 
 @Controller
 public class UserController {
-	
-		@Autowired
-		AsdosService asdosDAO;
-		
-		@Autowired
-		MahasiswaService mahasiswaDAO;
-		
-		@Autowired
-		MatkulService matkulDAO;
-		
-		@Autowired
-		DosenService dosenDAO;
-		
-	 	@RequestMapping("/")
-	 	 public String index (HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException 
-	    {
-	 		if (authentication != null) {
-				response.sendRedirect("/pengajuan/viewall");
-			}
-				
-			return "login";
-	    }
 
-	 	@RequestMapping("login")
-		public String login(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-			if (authentication != null) {
-				response.sendRedirect("/pengajuan/viewall");
-			}
-			
-			return "login";
-		}
+  @Autowired
+  AsdosService asdosDAO;
 
-		@RequestMapping("admin")
-		public String admin() {
-			return "admin";
-		}
-		
-		@RequestMapping("/mata-kuliah/{id_mataKuliah}")
-		public String getAsdosMataKuliah(Model model, 
-				@PathVariable(value = "id_mataKuliah") int id_mataKuliah) throws IOException
-		{	
-			List<String> listNPM = asdosDAO.selectMataKuliahDiPegang(id_mataKuliah);
-			List<Mahasiswa> listMahasiswa = new ArrayList<>();
-						
-			
-			for(int i = 0 ; i < listNPM.size() ; i++) {
-				listMahasiswa.add(mahasiswaDAO.getMahasiswaByNPM(listNPM.get(i)));
-			}
-			
-			model.addAttribute("listMahasiswa", listMahasiswa);
-			return "asdos/daftarasdos";
-		}
-		
-		@RequestMapping("/daftarmatkul")
-		public String getMatkul(Model model,HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException 
-		{
-			//int checkAs = asdosDAO.checkAsdos(request.getRemoteUser());
-			if(request.isUserInRole("ROLE_ADMIN")) {
-				Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
-				List<Matkul> matkulsResult = dosen.getMataKuliahList();
-				model.addAttribute("matkuls", matkulsResult);
-				return "asdos/daftarMatkul";
-			}else {
-				List<Integer> ids = asdosDAO.selectMatkulAsdos(request.getRemoteUser());
-				List<Matkul> matkuls = matkulDAO.getMatkul();
-				List<Matkul> matkulsResult = new ArrayList<>();
-				for(int id : ids) {
-					for(Matkul m : matkuls) {
-						if(m.getId() == id) {
-							matkulsResult.add(m);
-						}
-					}
-				}
-			
-				model.addAttribute("matkuls", matkulsResult);
-				return "asdos/daftarMatkul";
-			}
-		}
+  @Autowired
+  MahasiswaService mahasiswaDAO;
+
+  @Autowired
+  MatkulService matkulDAO;
+
+  @Autowired
+  DosenService dosenDAO;
+
+  @RequestMapping("/")
+  public String index (HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException
+  {
+    if (authentication != null) {
+      response.sendRedirect("/pengajuan/viewall");
+    }
+
+    model.addAttribute("title", "SIASISTEN | LOGIN");
+
+    return "login";
+  }
+
+  @RequestMapping("login")
+  public String login(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    if (authentication != null) {
+      response.sendRedirect("/pengajuan/viewall");
+    }
+    model.addAttribute("title", "SIASISTEN | LOGIN");
+
+    return "login";
+  }
+
+  @RequestMapping("admin")
+  public String admin() {
+    return "admin";
+  }
+
+  @RequestMapping("/mata-kuliah/{id_mataKuliah}")
+  public String getAsdosMataKuliah(Model model,
+      @PathVariable(value = "id_mataKuliah") int id_mataKuliah) throws IOException
+      {
+        List<String> listNPM = asdosDAO.selectMataKuliahDiPegang(id_mataKuliah);
+        List<Mahasiswa> listMahasiswa = new ArrayList<>();
+
+        model.addAttribute("title", "SIASISTEN | Daftar Asisten Dosen");
+
+        for(int i = 0 ; i < listNPM.size() ; i++) {
+          listMahasiswa.add(mahasiswaDAO.getMahasiswaByNPM(listNPM.get(i)));
+        }
+
+        model.addAttribute("listMahasiswa", listMahasiswa);
+        return "asdos/daftarasdos";
+      }
+
+  @RequestMapping("/daftarmatkul")
+  public String getMatkul(Model model,HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException
+  {
+    //int checkAs = asdosDAO.checkAsdos(request.getRemoteUser());
+    model.addAttribute("title", "SIASISTEN | Daftar Matakuliah");
+
+    if(request.isUserInRole("ROLE_ADMIN")) {
+      Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
+      List<Matkul> matkulsResult = dosen.getMataKuliahList();
+      model.addAttribute("matkuls", matkulsResult);
+      return "asdos/daftarMatkul";
+    }else {
+      List<Integer> ids = asdosDAO.selectMatkulAsdos(request.getRemoteUser());
+      List<Matkul> matkuls = matkulDAO.getMatkul();
+      List<Matkul> matkulsResult = new ArrayList<>();
+      for(int id : ids) {
+        for(Matkul m : matkuls) {
+          if(m.getId() == id) {
+            matkulsResult.add(m);
+          }
+        }
+      }
+
+      model.addAttribute("matkuls", matkulsResult);
+      return "asdos/daftarMatkul";
+    }
+  }
 }

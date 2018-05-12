@@ -35,11 +35,11 @@ public class LowonganController {
 
   @Autowired
   MatkulService matkulDAO;
-  
+
 
   @Autowired
   RuangService ruangDAO;
-  
+
 
   @RequestMapping("/view/{id_lowongan}")
   public String show(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
@@ -53,6 +53,7 @@ public class LowonganController {
 
     } catch (Exception e){}
 
+    model.addAttribute("title", "SIASISTEN | Menampilkan Lowongan");
     model.addAttribute("matakuliah", matkul);
     model.addAttribute("lowongan", lowongan);
     model.addAttribute("ruang", ruang);
@@ -64,13 +65,14 @@ public class LowonganController {
   public String show(Model model) {
     List<Lowongan> lowongans = lowonganDAO.getLowongan();
     List<Matkul> matkuls = matkulDAO.getMatkul();
-  
+
     Map<Integer, Matkul> listMatkul = new HashMap<Integer, Matkul>();
 
     for(Matkul m : matkuls){
       listMatkul.put(new Integer(m.getId()), m);
     }
 
+    model.addAttribute("title", "SIASISTEN | Menampilkan Semua Lowongan");
     model.addAttribute("lowongans", lowongans);
     model.addAttribute("matkuls", listMatkul);
     return "lowongan/index";
@@ -79,6 +81,7 @@ public class LowonganController {
   @RequestMapping("/tambah")
   public String add(Model model) {
     List<Matkul> listMatkul = matkulDAO.getMatkul();
+    model.addAttribute("title", "SIASISTEN | Menambah Lowongan");
     model.addAttribute("lowongan", new Lowongan());
     model.addAttribute("listStatus", Lowongan.LIST_STATUS);
     model.addAttribute("listMatkul",listMatkul);
@@ -89,6 +92,7 @@ public class LowonganController {
   @RequestMapping(value="/tambah", method=RequestMethod.POST)
   public String addSubmit(Model model, @ModelAttribute Lowongan lowongan) {
     lowonganDAO.insert(lowongan);
+    model.addAttribute("title", "SIASISTEN | Berhasil menambah Lowongan");
     model.addAttribute("message", "Sukses! Berhasil menambah lowongan");
     return "lowongan/notif";
   }
@@ -98,12 +102,14 @@ public class LowonganController {
     Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
     if(lowongan != null) {
       List<Matkul> listMatkul = matkulDAO.getMatkul();
+      model.addAttribute("title", "SIASISTEN | Berhasil Mengubah Lowongan");
       model.addAttribute("lowongan", lowongan);
       model.addAttribute("listStatus", Lowongan.LIST_STATUS);
       model.addAttribute("listMatkul",listMatkul);
       model.addAttribute("linkSubmit", "/lowongan/ubah/submit");
       return "lowongan/form-update";
     }else {
+      model.addAttribute("title", "SIASISTEN | Gagal Mengubah Lowongan");
       model.addAttribute("message", "Gagal! Lowongan tidak ditemukan");
       return "lowongan/notif";
     }
@@ -114,14 +120,17 @@ public class LowonganController {
     Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
 
     if(lowongan == null){
+      model.addAttribute("title", "SIASISTEN | Gagal Mengubah Lowongan");
       model.addAttribute("message", "Gagal! Lowongan tidak ditemukan.");
     } else {
       lowonganDAO.delete(id_lowongan);
       Lowongan deleteLowongan = lowonganDAO.getLowongan(id_lowongan);
 
       if (deleteLowongan == null){
+        model.addAttribute("title", "SIASISTEN | Berhasil Mengubah Lowongan");
         model.addAttribute("message", "Sukses! Berhasil menghapus lowongan id " + lowongan.getId());
       } else {
+        model.addAttribute("title", "SIASISTEN | Gagal Mengubah Lowongan");
         model.addAttribute("message", "Gagal! Lowongan id " + lowongan.getId() + " gagal dihapus.");
       }
     }
@@ -131,6 +140,7 @@ public class LowonganController {
   @RequestMapping(value="/ubah/submit", method=RequestMethod.POST)
   public String updateSubmit(Model model, @ModelAttribute Lowongan lowongan) {
     lowonganDAO.update(lowongan);
+    model.addAttribute("title", "SIASISTEN | Berhasil Menghapus Lowongan");
     model.addAttribute("message", "Sukses! Berhasil mengubah lowongan");
     return "lowongan/notif";
   }
