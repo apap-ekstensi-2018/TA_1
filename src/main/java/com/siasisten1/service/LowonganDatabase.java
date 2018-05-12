@@ -50,4 +50,11 @@ public class LowonganDatabase implements LowonganService{
   public void delete(int id) {
 	lowonganMapper.delete(id);
   }
+  
+  @Override
+  public Lowongan isMatkulDosen(int id_matkul)
+  {
+	  log.info("Is Matkul Dosen dengan id_matkul {}",id_matkul);
+	  return lowonganMapper.isMatkulDosen(id_matkul);
+  }
 }

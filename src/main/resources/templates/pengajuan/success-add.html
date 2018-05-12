@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Pengajuan telah disetuji</title>
-  </head>
-  <body>
-    <h1>Student not found</h1>
-    <h2>Data berhasil ditambahkan</h2>
-    <div th:replace="shared/footer :: footer"></div>
+    <head th:replace="shared/header :: assets">
+    </head>
+    <body>
+       	<div th:replace="shared/header :: navbar"></div>	
+	    <h2>Data berhasil ditambahkan</h2>
+	    <div th:replace="shared/footer :: footer"></div>
   </body>
 </html>

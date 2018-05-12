@@ -14,6 +14,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.mapping.FetchType;
 
 import com.siasisten1.model.Lowongan;
+import com.siasisten1.model.PengajuanModel;
 
 @Mapper
 public interface LowonganMapper {
@@ -55,4 +56,8 @@ public interface LowonganMapper {
 
   @Delete("DELETE lowongan WHERE id=#{id}")
   void delete(@Param("lowongan") int id);
+  
+  @Select("select * from lowongan where id_matkul= #{id_matkul}")
+  Lowongan isMatkulDosen(@Param("id_matkul") int id_matkul);
+  
 }

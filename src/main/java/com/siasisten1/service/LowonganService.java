@@ -11,4 +11,5 @@ public interface LowonganService {
   void insert(Lowongan lowongan);
   void update(Lowongan lowongan);
   void delete(int id);
+  Lowongan isMatkulDosen(int id_matkul);
 }

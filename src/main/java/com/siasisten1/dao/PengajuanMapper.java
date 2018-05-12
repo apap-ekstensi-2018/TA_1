@@ -20,7 +20,10 @@ public interface PengajuanMapper {
     @Select("select id, id_lowongan, username_mahasiswa, is_accepted from Pengajuan")
     List<PengajuanModel> selectAllPengajuan ();
 
-    @Insert("INSERT INTO Pengajuan (id, id_lowongan, username_mahasiswa, is_accepted) VALUES (#{id}, #{id_lowongan}, #{username_mahasiswa}, '2')")
+    @Select("select id, id_lowongan, username_mahasiswa, is_accepted from Pengajuan where username_mahasiswa = #{username_mahasiswa}")
+    List<PengajuanModel> selectAllPengajuanMahasiswa (@Param("username_mahasiswa") String username_mahasiswa);
+    
+    @Insert("INSERT INTO Pengajuan (id_lowongan, username_mahasiswa, is_accepted) VALUES (#{id_lowongan}, #{username_mahasiswa}, '2')")
     void addPengajuan (PengajuanModel Pengajuan);
     
     @Delete("DELETE FROM Pengajuan WHERE id = #{id}")
@@ -29,5 +32,9 @@ public interface PengajuanMapper {
     @Update("UPDATE PENGAJUAN SET "
 			+ "is_accepted=#{reviewValue}"
 			+ " WHERE id = #{id}")
-void updatePengajuan(@Param("id") String id_pengajuan, @Param("reviewValue") int reviewValue);
+    void updatePengajuan(@Param("id") String id_pengajuan, @Param("reviewValue") int reviewValue);
+
+    @Select("select id, id_lowongan, username_mahasiswa, is_accepted from Pengajuan where id_lowongan = #{id_lowongan} and username_mahasiswa = #{username_mahasiswa}")
+	PengajuanModel checkPengajuan(@Param("id_lowongan") int id_lowongan,@Param("username_mahasiswa") String username_mahasiswa);
+
 }

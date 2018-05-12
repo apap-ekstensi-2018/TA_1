@@ -16,9 +16,15 @@ public class SecurityHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException  {
 		Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 		
-		System.out.println("ROLEX :"+roles.contains("ROLE_ADMIN"));
-		if (roles.contains("ROLE_ADMIN")) {
+		System.out.println("ROLEX :"+roles.contains("ROLE_STUDENT"));
+		if (roles.contains("ROLE_STUDENT")) {
 			response.sendRedirect("/pengajuan/viewall");
 		}
+
+		System.out.println("ROLEX :"+roles.contains("ROLE_LECTURE"));
+		if (roles.contains("ROLE_LECTURE")) {
+			response.sendRedirect("/pengajuan/viewall");
+		}
+
 	}
 }

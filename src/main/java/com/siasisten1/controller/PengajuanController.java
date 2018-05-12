@@ -1,6 +1,13 @@
 package com.siasisten1.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mysql.jdbc.log.Log;
+import com.siasisten1.dao.DosenDAO;
+import com.siasisten1.model.Dosen;
 import com.siasisten1.model.Lowongan;
+import com.siasisten1.model.Matkul;
 import com.siasisten1.model.PengajuanModel;
+import com.siasisten1.service.DosenService;
 import com.siasisten1.service.LowonganService;
+import com.siasisten1.service.MatkulService;
 import com.siasisten1.service.PengajuanService;
 
 @Controller
@@ -26,7 +39,12 @@ public class PengajuanController {
 	@Autowired
 	LowonganService lowonganDAO;
 	
+
+	@Autowired
+	MatkulService matkulDAO;
 	
+	@Autowired
+	DosenService dosenDAO;
 
 	
 	 @RequestMapping("/")
@@ -39,6 +57,16 @@ public class PengajuanController {
 	    public String add (Model model)
 	    {	
 	    	List <Lowongan> lowongan = lowonganDAO.getBukaLowongan();
+	        List<Matkul> matkuls = matkulDAO.getMatkul();
+
+	        Map<Integer, Matkul> listMatkul = new HashMap<Integer, Matkul>();
+
+	        for(Matkul m : matkuls){
+	          listMatkul.put(new Integer(m.getId()), m);
+	        }
+
+	    	
+	        model.addAttribute("matkuls", listMatkul);
 	    	model.addAttribute("lowongan", lowongan);
 	        model.addAttribute("linkSubmit", "/pengajuan/tambah/submit");
 	        return "pengajuan/form_tambah_pengajuan";
@@ -54,44 +82,110 @@ public class PengajuanController {
 	    @RequestMapping(value = "/tambah/submit",method = RequestMethod.POST)
 	    public String addSubmit (
 	            @RequestParam(value = "id_pengajuan", required = false) String id_pengajuan,
-	            @RequestParam(value = "id_lowongan", required = false) String id_lowongan,
+	            @RequestParam(value = "id_lowongan", required = false) int id_lowongan,
 	            @RequestParam(value = "username_mahasiswa", required = false) String username_mahasiswa,
 	    		@RequestParam(value = "is_accepted", required = false) String status_pengajuan)
 	    {
-//	    	System.out.println("dddddddd");
-//	    	String id_pengajuan = "122";
-//	    	String id_lowongan ="222";
-//	    	String username_mahasiswa = "dawdwa";
-//	    	String status_pengajuan = "1";
-	    	PengajuanModel pengajuan = new PengajuanModel (id_pengajuan, id_lowongan, username_mahasiswa,status_pengajuan);
-	        pengajuanDAO.addPengajuan (pengajuan);
+	        PengajuanModel checkPengajuan = pengajuanDAO.checkPengajuan(id_lowongan, username_mahasiswa);
 	        
-	        return "pengajuan/success-add";
+	        if(checkPengajuan!=null)
+	        {
+	        	return "pengajuan/pengajuan-failed";
+	        }
+	        else
+	        {
+	        	 PengajuanModel pengajuan = new PengajuanModel (id_pengajuan, id_lowongan, username_mahasiswa,status_pengajuan, "", 0);
+	        	 pengajuanDAO.addPengajuan (pengajuan);
+	        	 return "pengajuan/success-add";
+	        }
 	    }
-//
-//
-//	    @RequestMapping("/Pengajuan/view")
-//	    public String view (Model model,
-//	            @RequestParam(value = "npm", required = false) String npm)
-//	    {
-//	        PengajuanModel Pengajuan = PengajuanDAO.selectPengajuan (npm);
-//
-//	        if (Pengajuan != null) {
-//	            model.addAttribute ("Pengajuan", Pengajuan);
-//	            return "view";
-//	        } else {
-//	            model.addAttribute ("npm", npm);
-//	            return "not-found";
-//	        }
-//	    }
+
+	    @RequestMapping(value = "/view/{id_pengajuan}",method = RequestMethod.GET)
+	    public String viewPath (Model model,
+	            @PathVariable(value = "id_pengajuan") String id_pengajuan)
+	    {
+	        model.addAttribute("linkSubmit", "/pengajuan/hapus");
+	    	PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
+
+	        if (pengajuan != null) {
+		    	String namaMatkul;
+	            model.addAttribute ("pengajuan", pengajuan);
+		        
+	            Lowongan lowongan = lowonganDAO.getLowongan(pengajuan.getId_lowongan());
+		        Matkul matkul = matkulDAO.getMatkul(lowongan.getIdMatkul());
+
+		        
+		        namaMatkul = matkul.getNama_matkul();
+		        pengajuan.setNamaMatkul(namaMatkul);
+
+		        return "pengajuan/viewPengajuan";
+	        } else {
+	            model.addAttribute ("id_pengajuan", id_pengajuan);
+	            return "pengajuan/not-found";
+	        }
+	    }
+
 
 	    @RequestMapping(value = "/viewall",method = RequestMethod.GET)
-	    public String view (Model model)
+	    public String view (Model model, HttpServletRequest request)
 	    {
-	        List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
-	        model.addAttribute ("data_pengajuan", data_pengajuan);
 	        model.addAttribute("reviewLink", "/pengajuan/review");
-	        return "pengajuan/viewallPengajuan";
+
+	        String namaMatkul;
+	        int idMatkul;
+        	List<PengajuanModel> data_pengajuan = new ArrayList<PengajuanModel>();
+
+	        if(request.isUserInRole("ROLE_LECTURE")) {
+	        	data_pengajuan = pengajuanDAO.selectAllPengajuan();
+	        	Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
+
+	        	if(dosen != null)
+	        	{
+		        	List<Matkul> data_matkul = dosen.getMataKuliahList();
+		        	List<PengajuanModel> dp = new ArrayList<PengajuanModel>();
+		        	
+		        	for(PengajuanModel pengajuan : data_pengajuan)
+			        {
+				        Lowongan lowongan = lowonganDAO.getLowongan(pengajuan.getId_lowongan());
+				        Matkul matkul = matkulDAO.getMatkul(lowongan.getIdMatkul());
+				        
+				        namaMatkul = matkul.getNama_matkul();
+				        idMatkul = matkul.getId();
+				        pengajuan.setNamaMatkul(namaMatkul);
+				        pengajuan.setId_matkul(idMatkul);
+				        
+		        		for(Matkul m: data_matkul) {
+		        			if(pengajuan.getId_matkul() == m.getId()) {
+		        				dp.add(pengajuan);
+		        			}
+	        			}
+			        }
+		        	
+		        	model.addAttribute("data_pengajuan",dp);
+	        	}
+	        	model.addAttribute("data_pengajuan",data_pengajuan);
+	        	return "pengajuan/viewallPengajuanDosen";
+	        }
+
+	        if(request.isUserInRole("ROLE_STUDENT")) {
+		        data_pengajuan = pengajuanDAO.selectAllPengajuanMahasiswa(request.getRemoteUser());
+
+		        for(PengajuanModel pengajuan : data_pengajuan)
+		        {
+			        Lowongan lowongan = lowonganDAO.getLowongan(pengajuan.getId_lowongan());
+			        Matkul matkul = matkulDAO.getMatkul(lowongan.getIdMatkul());
+			        
+			        namaMatkul = matkul.getNama_matkul();
+			        pengajuan.setNamaMatkul(namaMatkul);
+		        }
+		        
+		        model.addAttribute ("data_pengajuan", data_pengajuan);
+
+		        return "pengajuan/viewallPengajuan";
+	        }
+	        return "pengajuan/not-found";
+
+	        
 	    }
 
 	    @RequestMapping(value = "/hapus/{id_pengajuan}",method = RequestMethod.GET)
