@@ -15,5 +15,5 @@ public class Mahasiswa
   private int id;
   private String npm;
   private String nama;
-  private List<Matkul> mataKuliahList;
+  //private List<Matkul> mataKuliahList;
 }

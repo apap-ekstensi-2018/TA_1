@@ -9,6 +9,7 @@ import com.siasisten1.model.Lowongan;
 import com.siasisten1.service.LowonganService;
 import com.siasisten1.service.MatkulService;
 import com.siasisten1.service.RuangService;
+import com.siasisten1.service.PengajuanService;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class LowonganController {
 
   @Autowired
   MatkulService matkulDAO;
+  
 
   @Autowired
   RuangService ruangDAO;
@@ -60,7 +62,7 @@ public class LowonganController {
   public String show(Model model) {
     List<Lowongan> lowongans = lowonganDAO.getLowongan();
     List<Matkul> matkuls = matkulDAO.getMatkul();
-
+  
     Map<Integer, Matkul> listMatkul = new HashMap<Integer, Matkul>();
 
     for(Matkul m : matkuls){

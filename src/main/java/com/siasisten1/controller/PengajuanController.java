@@ -25,6 +25,8 @@ public class PengajuanController {
 
 	@Autowired
 	LowonganService lowonganDAO;
+	
+	
 
 	
 	 @RequestMapping("/")
@@ -137,7 +139,7 @@ public class PengajuanController {
 	    		@RequestParam(value = "is_accepted", required = false) String is_accepted)
 	    {
 	        PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
-	    	if(pengajuan != null)
+	    		if(pengajuan != null)
 	    	{
 	    		if(is_accepted.equals("2")) {
 		    		pengajuanDAO.deletePengajuan(id_pengajuan);

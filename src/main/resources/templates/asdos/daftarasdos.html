@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div th:replace="shared/header :: navbar"></div>
+    <!-- table -->
+    <div class="container my-4">
+      <div class="row">
+        <div class="col">
+          <h2>Data Asdos</h2>
+        </div>
+      </div>
+      <table class="table table-stripped" id="dd">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>NPM</th>
+          </tr>
+        </thead>
+        <tbody align="center">
+          <tr th:each="asdos, iterationStatus: ${listMahasiswa}">
+            <td th:text="${iterationStatus.count}">1</td>
+            <td th:text="${asdos.getNama()}">Nama ASDOS</td>
+            <td th:text="${asdos.getNpm()}">0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:replace="shared/footer :: footer"></div>
+    <script type="text/javascript" charset="utf-8" src="/assets/js/bootstrap.min.js"></script>
+  </body>
+</html>

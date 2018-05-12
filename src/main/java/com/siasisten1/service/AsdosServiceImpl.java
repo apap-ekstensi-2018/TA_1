@@ -1,7 +1,9 @@
 package com.siasisten1.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.siasisten1.dao.AsdosMapper;
 
@@ -13,7 +15,12 @@ public class AsdosServiceImpl implements AsdosService{
 	
 	@Autowired
 	private AsdosMapper asdosMapper;
-
+	  
+	@Override
+	public List<String> selectMataKuliahDiPegang(int id_MataKuliah) {
+		return asdosMapper.selectMataKuliahDiPegang(id_MataKuliah);
+	}
+	
 	@Override
 	public boolean isAsdos(String npm) {
 		// TODO Auto-generated method stub
@@ -24,5 +31,4 @@ public class AsdosServiceImpl implements AsdosService{
 			System.out.println("masukkkkkksiniiiii=====");
 			return false;
 	}
-	
 }

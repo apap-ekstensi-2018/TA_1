@@ -1,5 +1,7 @@
 package com.siasisten1.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,4 +29,15 @@ public class MahasiswaDAOImpl implements MahasiswaDAO{
     }
   }
 
+  @Override
+  public Mahasiswa getMahasiswaByNPM(String npm) {
+	  Mahasiswa mahasiswa = restTemplate.getForObject(url + "/view/npm/" + npm, Mahasiswa.class);
+	  return mahasiswa;
+  }
+  
+  @Override
+  public List<Mahasiswa> getAllMahasiswa() {
+	  List<Mahasiswa> AllMahasiswa = restTemplate.getForObject(url + "/viewall", List.class);
+	  return AllMahasiswa;
+  }
 }
