@@ -1,6 +1,7 @@
 package com.siasisten1.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,8 +17,14 @@ public class MahasiswaDAOImpl implements MahasiswaDAO{
 
   @Override
   public Mahasiswa getMahasiswaById(int id) {
-    Mahasiswa mahasiswa = restTemplate.getForObject(url + "/view/id/" + id, Mahasiswa.class);
-    return mahasiswa;
+	ResponseEntity <Mahasiswa> response = restTemplate.getForEntity(url + "/view/id/" + id, Mahasiswa.class);
+    if(response.getStatusCodeValue() != 200) {
+    		return null;
+    }
+    else {
+    		Mahasiswa mahasiswa = restTemplate.getForObject(url + "/view/id/" + id, Mahasiswa.class);
+        return mahasiswa;
+    }
   }
 
 }

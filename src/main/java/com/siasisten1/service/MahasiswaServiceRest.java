@@ -18,6 +18,7 @@ public class MahasiswaServiceRest implements MahasiswaService{
   @Override
   public Mahasiswa getMahasiswaById(int id) {
     log.info("REST - select mahasiswa with id {}",id);
-    return mahasiswaDAO.getMahasiswaById(id);
+    Mahasiswa mahasiswa = mahasiswaDAO.getMahasiswaById(id);
+    	return mahasiswa;
   }
 }
