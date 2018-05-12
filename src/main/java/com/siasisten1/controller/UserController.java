@@ -93,7 +93,7 @@ public class UserController {
 				Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
 				List<Matkul> matkulsResult = dosen.getMataKuliahList();
 				model.addAttribute("matkuls", matkulsResult);
-				return "asdos/daftarMatkul";
+				return "asdos/daftarmatkul";
 			}else {
 				List<Integer> ids = asdosDAO.selectMatkulAsdos(request.getRemoteUser());
 				List<Matkul> matkuls = matkulDAO.getMatkul();
