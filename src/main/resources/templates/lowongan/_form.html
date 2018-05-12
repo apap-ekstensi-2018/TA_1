@@ -13,14 +13,14 @@
 
           <div class="form-group">
             <label for="is_open">Status</label>
-            <select id="is_open" name="is_open" th:field="*{is_open}" class="custom-select">
-              <option th:each="status, i : ${listStatus}" th:attr="selected=(*{is_open}==${i.index})" th:value="${i.index}" th:text="${status}"></option>
+            <select id="is_open" name="is_open" th:field="*{opened}" class="custom-select">
+              <option th:each="status, i : ${listStatus}" th:attr="selected=(*{opened}==${i.index})" th:value="${i.index}" th:text="${status}"></option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="jml_lowongan">Jumlah lowongan</label>
-            <input type="text" name="jml_lowongan" th:field="*{jml_lowongan}" class="form-control"></input>
+            <input type="text" name="jml_lowongan" th:field="*{jumlah_lowongan}" class="form-control"></input>
           </div>
 
           <div class="form-group float-right">
