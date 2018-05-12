@@ -10,8 +10,8 @@
 
 ### Response
 ```json
-[
+{
   status: 200,
   body: true
-]
+}
 ```
