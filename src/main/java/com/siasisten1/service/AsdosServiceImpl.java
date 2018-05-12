@@ -2,6 +2,7 @@ package com.siasisten1.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,10 @@ public class AsdosServiceImpl implements AsdosService{
 	@Override
 	public int checkAsdos(String npm) {
 		return asdosMapper.checkAsdos(npm);
+	}
+	
+	@Override
+	public List<Integer> selectMatkulAsdos(String npm){
+		return asdosMapper.selectMatkulAsdos(npm);
 	}
 }

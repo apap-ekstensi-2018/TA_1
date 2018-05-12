@@ -26,18 +26,17 @@
               <tr>
                 <th><a>No.</a></th>
                 <th><a>ID</a></th>
-                <th><a>ID Lowongan</a></th>
+                <th><a>Mata Kuliah</a></th>
                 <th><a>Username Mahasiswa</a></th>
                 <th><a>Status Pengajuan</a></th>
                 <th><a>Action</a></th>
-                <th><a>Review</a></th>
               </tr>
             </thead>
             <tbody align="center">
               <tr th:each="pengajuan,iterationStatus: ${data_pengajuan}" th:class="${iterationStatus.odd} ? 'odd'">
                 <td><p th:text="${iterationStatus.count}">No. 1</p></td>
                 <td><p th:text="${pengajuan.id}">pengajuan ID</p></td>
-                <td><p th:text="${pengajuan.id_lowongan}">pengajuan ID lowongan</p></td>
+                <td><p th:text="${pengajuan.namaMatkul}">pengajuan ID lowongan</p></td>
                 <td><p th:text="${pengajuan.username_mahasiswa}">pengajuan Username Mahasiswa</p></td>
                 <td>
                   <div th:switch="${pengajuan.is_accepted}">
@@ -52,51 +51,6 @@
                 <td><a th:href="'/pengajuan/view/' + ${pengajuan.id}">
                     <button type="button" class="btn btn-danger" name="action">Detail</button></a> </td>
 
-                <td>
-                  <!-- <a th:href="'/review/' + ${pengajuan.id}"> -->
-                  <div th:switch="${pengajuan.is_accepted}">
-                    <div th:case="'2'">
-                    			<form th:action="@{${reviewLink}}"  method="post">
-                    				<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 0/>
-                    				<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
-                    				<button type="submit" class="btn btn-danger" name="action">Tolak</button>
-                  			</form>
-                  			
-                  			<form th:action="@{${reviewLink}}"  method="post">
-                    				<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 1/>
-                    				<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
-                    				<button type="submit" class="btn btn-success" name="action">Setujui</button>
-                  			</form>
-                    	</div>
-                    <div th:case="'1'">
-                    		<form th:action="@{${reviewLink}}"  method="post">
-                    			<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 0/>
-                    			<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
-                    			<button type="submit" class="btn btn-danger" name="action">Tolak</button>
-                  		</form>
-                    </div>
-                    <div th:case="'0'">
-                    		    <form th:action="@{${reviewLink}}"  method="post">
-                    				<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 1/>
-                    				<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
-                    				<button type="submit" class="btn btn-success" name="action">Setujui</button>
-                  			</form>
-                    </div>
-                  </div>
-                  
-                 <!--  <form th:action="@{${reviewLink}}"  method="post">
-                    <input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 0/>
-                    <input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
-                    <button type="submit" class="btn btn-danger" name="action">Tolak</button>
-                  </form>
-
-                  <a th:href="'/review/' + ${pengajuan.id}">
-                  <form th:action="@{${reviewLink}}"  method="post">
-                    <input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 1/>
-                    <input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
-                    <button type="submit" class="btn btn-success" name="action">Setujui</button>
-                  </form> -->
-                </td>
               </tr>
             </tbody>
           </table>

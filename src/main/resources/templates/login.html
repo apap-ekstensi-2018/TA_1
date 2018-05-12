@@ -14,7 +14,9 @@
         <div class="row align-items-center" style="min-height: 100vh">
           <div class="col">
             <div th:if = "${param.error}">
-              Invalid username and password.
+              <div class="alert alert-danger" role="alert">
+  				Invalid password or username
+			</div>
             </div>
             <form th:action = "@{/login}" method = "post">
               <h1>

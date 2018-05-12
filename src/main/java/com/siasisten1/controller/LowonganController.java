@@ -56,7 +56,7 @@ public class LowonganController {
     model.addAttribute("matakuliah", matkul);
     model.addAttribute("lowongan", lowongan);
     model.addAttribute("ruang", ruang);
-    model.addAttribute("linkDelete", "/lowongan/view/" + lowongan.getId());
+    model.addAttribute("linkDelete", "/lowongan/ubah/" + lowongan.getId());
     return "lowongan/show";
   }
 
@@ -109,7 +109,7 @@ public class LowonganController {
     }
   }
 
-  @RequestMapping(value="/ubah/view/{id_lowongan}", method=RequestMethod.POST)
+  @RequestMapping(value="/ubah/{id_lowongan}", method=RequestMethod.POST)
   public String delete(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
     Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
 
@@ -128,7 +128,7 @@ public class LowonganController {
     return "lowongan/notif";
   }
 
-  @RequestMapping(value="/ubah/view/", method=RequestMethod.POST)
+  @RequestMapping(value="/ubah/submit", method=RequestMethod.POST)
   public String updateSubmit(Model model, @ModelAttribute Lowongan lowongan) {
     lowonganDAO.update(lowongan);
     model.addAttribute("message", "Sukses! Berhasil mengubah lowongan");

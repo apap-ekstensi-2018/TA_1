@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,7 +62,7 @@ public class PengajuanController {
 
 
 	        model.addAttribute("matkuls", listMatkul);
-	    	model.addAttribute("lowongan", lowongan);
+	        model.addAttribute("lowongan", lowongan);
 	        model.addAttribute("linkSubmit", "/pengajuan/tambah/submit");
 	        return "pengajuan/form_tambah_pengajuan";
 	    }
@@ -86,13 +85,13 @@ public class PengajuanController {
 
 	        if(checkPengajuan!=null)
 	        {
-	        	return "pengajuan/pengajuan-failed";
+	        		return "pengajuan/pengajuan-failed";
 	        }
 	        else
 	        {
-	        	 PengajuanModel pengajuan = new PengajuanModel (id_pengajuan, id_lowongan, username_mahasiswa,status_pengajuan, "", 0);
-	        	 pengajuanDAO.addPengajuan (pengajuan);
-	        	 return "pengajuan/success-add";
+		        	 PengajuanModel pengajuan = new PengajuanModel (id_pengajuan, id_lowongan, username_mahasiswa,status_pengajuan, "", 0);
+		        	 pengajuanDAO.addPengajuan (pengajuan);
+		        	 return "pengajuan/success-add";
 	        }
 	    }
 
@@ -101,7 +100,7 @@ public class PengajuanController {
 	            @PathVariable(value = "id_pengajuan") String id_pengajuan)
 	    {
 	        model.addAttribute("linkSubmit", "/pengajuan/hapus");
-	    	PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
+	        PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
 
 	        if (pengajuan != null) {
 		    	String namaMatkul;
@@ -129,41 +128,40 @@ public class PengajuanController {
 
 	        String namaMatkul;
 	        int idMatkul;
-        	List<PengajuanModel> data_pengajuan = new ArrayList<PengajuanModel>();
+	        List<PengajuanModel> data_pengajuan = new ArrayList<PengajuanModel>();
 
-	        if(request.isUserInRole("ROLE_LECTURE")) {
-	        	data_pengajuan = pengajuanDAO.selectAllPengajuan();
-	        	Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
-
-	        	if(dosen != null)
-	        	{
-		        	List<Matkul> data_matkul = dosen.getMataKuliahList();
-		        	List<PengajuanModel> dp = new ArrayList<PengajuanModel>();
-
-		        	for(PengajuanModel pengajuan : data_pengajuan)
-			        {
-				        Lowongan lowongan = lowonganDAO.getLowongan(pengajuan.getId_lowongan());
-				        Matkul matkul = matkulDAO.getMatkul(lowongan.getIdMatkul());
-
-				        namaMatkul = matkul.getNama_matkul();
-				        idMatkul = matkul.getId();
-				        pengajuan.setNamaMatkul(namaMatkul);
-				        pengajuan.setId_matkul(idMatkul);
-
-		        		for(Matkul m: data_matkul) {
-		        			if(pengajuan.getId_matkul() == m.getId()) {
-		        				dp.add(pengajuan);
+	        if(request.isUserInRole("ROLE_ADMIN")) {
+		        	data_pengajuan = pengajuanDAO.selectAllPengajuan();
+		        	Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
+		        	model.addAttribute("data_pengajuan",data_pengajuan);
+			        
+		        	if(dosen != null)
+		        	{
+			        	List<Matkul> data_matkul = dosen.getMataKuliahList();
+			        	List<PengajuanModel> dp = new ArrayList<PengajuanModel>();
+	
+			        	for(PengajuanModel pengajuan : data_pengajuan)
+				        {
+					        Lowongan lowongan = lowonganDAO.getLowongan(pengajuan.getId_lowongan());
+					        Matkul matkul = matkulDAO.getMatkul(lowongan.getIdMatkul());
+	
+					        namaMatkul = matkul.getNama_matkul();
+					        idMatkul = matkul.getId();
+					        pengajuan.setNamaMatkul(namaMatkul);
+					        pengajuan.setId_matkul(idMatkul);
+	
+			        		for(Matkul m: data_matkul) {
+			        			if(pengajuan.getId_matkul() == m.getId()) {
+			        				dp.add(pengajuan);
+			        			}
 		        			}
-	        			}
-			        }
-
-		        	model.addAttribute("data_pengajuan",dp);
-	        	}
-	        	model.addAttribute("data_pengajuan",data_pengajuan);
-	        	return "pengajuan/viewallPengajuanDosen";
+			        }	
+			        	model.addAttribute("data_pengajuan",dp);
+		        	}
+		        	return "pengajuan/viewallPengajuanDosen";
 	        }
 
-	        if(request.isUserInRole("ROLE_STUDENT")) {
+	        if(request.isUserInRole("ROLE_USER")) {
 		        data_pengajuan = pengajuanDAO.selectAllPengajuanMahasiswa(request.getRemoteUser());
 
 		        for(PengajuanModel pengajuan : data_pengajuan)
@@ -202,30 +200,57 @@ public class PengajuanController {
 	    @RequestMapping(value = "/review", method = RequestMethod.POST)
 	    public String reviewPengajuan(Model model,
 	    		@RequestParam(value = "id_pengajuan", required = true) String id_pengajuan,
-	    		@RequestParam(value = "reviewValue", required = true) int reviewValue)
+	    		@RequestParam(value = "reviewValue", required = true) int reviewValue,
+	    		HttpServletRequest request)
 	    {
-	    		PengajuanModel pengajuan = pengajuanDAO.selectPengajuan(id_pengajuan);
-	    		if(pengajuan != null)
+	    		PengajuanModel pengajuan1 = pengajuanDAO.selectPengajuan(id_pengajuan);
+	    		if(pengajuan1 != null)
 	    		{
+	    			String namaMatkul;
+	    		    int idMatkul;
+	    		    List<PengajuanModel> data_pengajuan = new ArrayList<PengajuanModel>();
 	    			pengajuanDAO.updatePengajuan(id_pengajuan, reviewValue);
+		        	data_pengajuan = pengajuanDAO.selectAllPengajuan();
+		        	Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
+		        	model.addAttribute("data_pengajuan",data_pengajuan);
 	    		    System.out.println("Rev Val :" + reviewValue);
-
+	    		    
+	    		 	if(dosen != null)
+		        	{
+			        	List<Matkul> data_matkul = dosen.getMataKuliahList();
+			        	List<PengajuanModel> dp = new ArrayList<PengajuanModel>();
+	
+			        	for(PengajuanModel pengajuan : data_pengajuan)
+				        {
+					        Lowongan lowongan = lowonganDAO.getLowongan(pengajuan.getId_lowongan());
+					        Matkul matkul = matkulDAO.getMatkul(lowongan.getIdMatkul());
+	
+					        namaMatkul = matkul.getNama_matkul();
+					        idMatkul = matkul.getId();
+					        pengajuan.setNamaMatkul(namaMatkul);
+					        pengajuan.setId_matkul(idMatkul);
+	
+			        		for(Matkul m: data_matkul) {
+			        			if(pengajuan.getId_matkul() == m.getId()) {
+			        				dp.add(pengajuan);
+			        			}
+		        			}
+			        }	
+			        	model.addAttribute("data_pengajuan",dp);
+		        	}
+	    		 	
 	    		    if(reviewValue == 1) {
-	    		    	 	List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
-	    			    model.addAttribute ("data_pengajuan", data_pengajuan);
 	    			    model.addAttribute("reviewLink", "/pengajuan/review");
 	    		    		model.addAttribute("id_pengajuan", id_pengajuan);
 	    		    		model.addAttribute("is_accepted", 1);
 	    		    		model.addAttribute("is_rejected", 0);
-	    		    		return "pengajuan/viewallPengajuan";
+	    		    		return "pengajuan/viewallPengajuanDosen";
 	    		    }else {
-	    		    	 	List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
-	    			    model.addAttribute ("data_pengajuan", data_pengajuan);
 	    			    model.addAttribute("reviewLink", "/pengajuan/review");
 	    		    		model.addAttribute("id_pengajuan", id_pengajuan);
 	    		    		model.addAttribute("is_accepted", 0);
 	    		    		model.addAttribute("is_rejected", 1);
-	    		    		return "pengajuan/viewallPengajuan";
+	    		    		return "pengajuan/viewallPengajuanDosen";
 	    		    }
 	    		} else {
 	    			model.addAttribute("id_pengajuan", id_pengajuan);
@@ -252,26 +277,5 @@ public class PengajuanController {
 	    				return "pengajuan/not-found";
 	    			}
 	    }
-
-//	    @RequestMapping("/Pengajuan/update/{npm}")
-//	    public String update (Model model, @PathVariable(value = "npm") String npm)
-//	    {
-//	    	PengajuanModel Pengajuan = PengajuanDAO.selectPengajuan(npm);
-//	    	if(Pengajuan == null)
-//	    	{
-//	    		model.addAttribute("npm",npm);
-//	    		return "not-found";
-//	    	}
-//	    	model.addAttribute ("Pengajuan", Pengajuan);
-//	        return "form-update";
-//		}
-//
-//		@RequestMapping(value = "/Pengajuan/update/submit", method = RequestMethod.POST )
-//		public String updateSubmit(@ModelAttribute PengajuanModel Pengajuan)
-//		{
-//			PengajuanDAO.updatePengajuan (Pengajuan);
-//
-//		    return "success-update";   }
-
 
 }

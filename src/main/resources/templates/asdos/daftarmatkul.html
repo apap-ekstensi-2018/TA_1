@@ -17,9 +17,7 @@
           <tr>
             <th>No</th>
             <th>Mata Kuliah</th>
-            <div th:if="${isAsdos > 0}">
-            		<th>Asisten Dosen</th>
-            </div>
+            	<th>Asisten Dosen</th>
           </tr>
         </thead>
         <tbody align="center">
@@ -27,9 +25,7 @@
             <td th:text="${iterationStatus.count}">1</td>
             <td th:text="${matkul.getNama_matkul()}">Nama ASDOS</td>
             <td>
-        		<div th:if="${isAsdos > 0}">
-  				<a th:href="'/mata-kuliah/' + ${matkul.getId()}">Lihat Daftar ASDOS</a>
-			</div>
+  			<a th:href="'/mata-kuliah/' + ${matkul.getId()}">Lihat Daftar ASDOS</a>
             </td>
              <!-- th:text="${iterationStatus.count}" -->
           </tr>

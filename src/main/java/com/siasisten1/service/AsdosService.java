@@ -8,4 +8,5 @@ public interface AsdosService {
 	List<String> selectMataKuliahDiPegang(int id_MataKuliah);
 	boolean isAsdos(@Param("npm") String npm);
 	int checkAsdos(@Param("npm") String npm);
+	List<Integer> selectMatkulAsdos(@Param("npm") String npm);
 }

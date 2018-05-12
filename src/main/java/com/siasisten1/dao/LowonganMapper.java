@@ -22,7 +22,7 @@ public interface LowonganMapper {
   @Results(value = {
     @Result(property="id", column="id"),
     @Result(property="opened", column="is_open"),
-    @Result(property="jumlah_lowongan", column="jml_lowongan")
+    @Result(property="jumlah_lowongan", column="jumlah_lowongan")
   })
   List<Lowongan> getAllLowongan();
 
@@ -34,28 +34,29 @@ public interface LowonganMapper {
     @Result(property="id", column="id"),
     @Result(property="id_matkul", column="id_matkul"),
     @Result(property="opened", column="is_open"),
-    @Result(property="jumlah_lowongan", column="jml_lowongan")
+    @Result(property="jumlah_lowongan", column="jumlah_lowongan")
   })
   Lowongan findById(int id);
 
   @Delete("DELETE lowongan WHERE id = #{id}")
   Lowongan deleteById(int id);
 
-  @Insert("INSERT INTO lowongan (id_matkul, is_open, jml_lowongan) VALUES ("
+  @Insert("INSERT INTO lowongan (id_matkul, is_open, jumlah_lowongan) VALUES ("
 		    + "#{lowongan.id_matkul},"
 		    + "#{lowongan.is_open},"
-		    + "#{lowongan.jml_lowongan})")
+		    + "#{lowongan.jumlah_lowongan})")
   void insert(@Param("lowongan") Lowongan lowongan);
 
   @Update("UPDATE lowongan SET "
 		    + "id_matkul=#{lowongan.id_matkul},"
 		    + "is_open=#{lowongan.is_open},"
-		    + "jml_lowongan=#{lowongan.jml_lowongan}"
+		    + "jumlah_lowongan=#{lowongan.jumlah_lowongan}"
 		    + " WHERE id=#{lowongan.id}")
+  
   void update(@Param("lowongan") Lowongan lowongan);
 
-  @Delete("DELETE lowongan WHERE id=#{id}")
-  void delete(@Param("lowongan") int id);
+  @Delete("DELETE FROM lowongan WHERE id=#{id}")
+  void delete(@Param("id") int id);
   
   @Select("select * from lowongan where id_matkul= #{id_matkul}")
   Lowongan isMatkulDosen(@Param("id_matkul") int id_matkul);

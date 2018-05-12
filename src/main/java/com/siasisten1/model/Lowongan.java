@@ -14,10 +14,9 @@ public class Lowongan
   private int id;
   private int id_matkul;
   private int is_open;
-  private int jml_lowongan;
+  private int jumlah_lowongan;
 
   private boolean opened;
-  public int jumlah_lowongan;
 
   public String getStatus() {
     System.out.println(is_open);
