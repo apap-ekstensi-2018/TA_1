@@ -41,6 +41,22 @@ You should configure your project to build a jar or war (as appropriate) by usin
 ```
 [See more](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#build-tool-plugins-maven-packaging)
 
+
+## Features
+- [x] Login
+- [x] Logout
+- [x] Melihat lowongan
+- [x] Melihat seluruh lowongan
+- [x] Menambahkan lowongan
+- [x] Mengubah lowongan
+- [x] Menghapus lowongan
+- [x] Melihat pengajuan menjadi asisten dosen
+- [x] Melihat seluruh pengajuan asisten dosen
+- [x] Menambahkan pengajuan menjadi asisten dosen
+- [x] Menghapus pengajuan menjadi asisten dosen
+- [] Mereview lowongan menjadi asisten dosen
+- [] Melihat list asisten dosen mata kuliah terkait
+
 ## Important links
 - [Rest Cheatsheet](https://github.com/RestCheatSheet/api-cheat-sheet#api-design-cheat-sheet)
 - [Spring Boot Homepage](https://docs.spring.io/spring-boot/docs/current/reference/html/index.html)
