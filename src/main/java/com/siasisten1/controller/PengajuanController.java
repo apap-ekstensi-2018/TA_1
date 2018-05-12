@@ -2,6 +2,8 @@ package com.siasisten1.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +29,8 @@ public class PengajuanController {
 	LowonganService lowonganDAO;
 
 	
-	 @RequestMapping("/")
-	    public String index ()
+	@RequestMapping("/")
+		public String index ()
 	    {
 	        return "index";
 	    }
@@ -42,13 +44,6 @@ public class PengajuanController {
 	        return "pengajuan/form_tambah_pengajuan";
 	    }
 
-	    @RequestMapping(value = "/cici",method = RequestMethod.POST)
-	    public String cici (Model model)
-	    {	
-	        return "pengajuan/form_tambah_pengajuan";
-	    }
-
-
 	    @RequestMapping(value = "/tambah/submit",method = RequestMethod.POST)
 	    public String addSubmit (
 	            @RequestParam(value = "id_pengajuan", required = false) String id_pengajuan,
@@ -56,32 +51,11 @@ public class PengajuanController {
 	            @RequestParam(value = "username_mahasiswa", required = false) String username_mahasiswa,
 	    		@RequestParam(value = "is_accepted", required = false) String status_pengajuan)
 	    {
-//	    	System.out.println("dddddddd");
-//	    	String id_pengajuan = "122";
-//	    	String id_lowongan ="222";
-//	    	String username_mahasiswa = "dawdwa";
-//	    	String status_pengajuan = "1";
 	    	PengajuanModel pengajuan = new PengajuanModel (id_pengajuan, id_lowongan, username_mahasiswa,status_pengajuan);
 	        pengajuanDAO.addPengajuan (pengajuan);
 	        
 	        return "pengajuan/success-add";
 	    }
-//
-//
-//	    @RequestMapping("/Pengajuan/view")
-//	    public String view (Model model,
-//	            @RequestParam(value = "npm", required = false) String npm)
-//	    {
-//	        PengajuanModel Pengajuan = PengajuanDAO.selectPengajuan (npm);
-//
-//	        if (Pengajuan != null) {
-//	            model.addAttribute ("Pengajuan", Pengajuan);
-//	            return "view";
-//	        } else {
-//	            model.addAttribute ("npm", npm);
-//	            return "not-found";
-//	        }
-//	    }
 
 	    @RequestMapping(value = "/view/{id_pengajuan}",method = RequestMethod.GET)
 	    public String viewPath (Model model,
@@ -99,14 +73,22 @@ public class PengajuanController {
 	        }
 	    }
 
-
 	    @RequestMapping(value = "/viewall",method = RequestMethod.GET)
-	    public String view (Model model)
+	    public String view (Model model, HttpServletRequest request)
 	    {
-	        List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
-	        model.addAttribute ("data_pengajuan", data_pengajuan);
+	    	if(request.isUserInRole("ROLE_MAHASISWA")) {
+		        List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
+		        model.addAttribute ("data_pengajuan", data_pengajuan);		        
+		        
+		        return "pengajuan/viewallPengajuan";
+	    	} else if(request.isUserInRole("ROLE_DOSEN")) {
+		        List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
+		        model.addAttribute ("data_pengajuan", data_pengajuan);		        
 
-	        return "pengajuan/viewallPengajuan";
+		        return "pengajuan/viewallPengajuan";
+	    	} else {
+	    		return "pengajuan/delete";
+	    	}
 	    }
 
 	    @RequestMapping(value = "/hapus/{id_pengajuan}",method = RequestMethod.GET)
@@ -143,25 +125,4 @@ public class PengajuanController {
 	    	}
 	    }
 	    
-//	    @RequestMapping("/Pengajuan/update/{npm}")
-//	    public String update (Model model, @PathVariable(value = "npm") String npm)
-//	    {
-//	    	PengajuanModel Pengajuan = PengajuanDAO.selectPengajuan(npm);
-//	    	if(Pengajuan == null)
-//	    	{
-//	    		model.addAttribute("npm",npm);
-//	    		return "not-found";
-//	    	}
-//	    	model.addAttribute ("Pengajuan", Pengajuan);      
-//	        return "form-update";   
-//		}
-//
-//		@RequestMapping(value = "/Pengajuan/update/submit", method = RequestMethod.POST )
-//		public String updateSubmit(@ModelAttribute PengajuanModel Pengajuan)
-//		{
-//			PengajuanDAO.updatePengajuan (Pengajuan);
-//		  
-//		    return "success-update";   }
-
-
 }
