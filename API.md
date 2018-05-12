@@ -1,11 +1,10 @@
 ## Application Programming Interface
 
 ### List
-* [/api/v1/blah](#blah)
-* [/api/v1/baz](#baz)
+* [/asisten-dosen/cek-status?id={id_mahasiswa}](#apicheckstatus)
 
-### /api/v1/blah
-#### URL : `/api/v1/blah`
+### /asisten-dosen/cek-status?id={id_mahasiswa}
+#### URL : `/asisten-dosen/cek-status?id={id_mahasiswa}`
 #### Method : `GET`
 
 ### Response
