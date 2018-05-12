@@ -3,10 +3,12 @@ package com.siasisten1.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.siasisten1.model.Ruang;
 import com.siasisten1.model.Matkul;
 import com.siasisten1.model.Lowongan;
 import com.siasisten1.service.LowonganService;
 import com.siasisten1.service.MatkulService;
+import com.siasisten1.service.RuangService;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +20,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("lowongan")
 public class LowonganController {
@@ -28,12 +34,25 @@ public class LowonganController {
   @Autowired
   MatkulService matkulDAO;
 
+  @Autowired
+  RuangService ruangDAO;
+
   @RequestMapping("/view/{id_lowongan}")
   public String show(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
     Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
     Matkul matkul = matkulDAO.getMatkul(lowongan.getIdMatkul());
+    Ruang ruang = new Ruang(lowongan.getIdMatkul(), "An error occured on get Ruang", 0);
+
+    try {
+      Ruang ruangan = ruangDAO.getRuang(lowongan.getIdMatkul());
+      if(ruangan != null) ruang = ruangan;
+
+    } catch (Exception e){}
+
     model.addAttribute("matakuliah", matkul);
     model.addAttribute("lowongan", lowongan);
+    model.addAttribute("ruang", ruang);
+    model.addAttribute("linkDelete", "/lowongan/view/" + lowongan.getId());
     return "lowongan/show";
   }
 
@@ -72,21 +91,40 @@ public class LowonganController {
 
   @RequestMapping("/ubah/{id_lowongan}")
   public String update(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
-	Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
-	if(lowongan != null) {
-		List<Matkul> listMatkul = matkulDAO.getMatkul();
-	    model.addAttribute("lowongan", lowongan);
-	    model.addAttribute("listStatus", Lowongan.LIST_STATUS);
-	    model.addAttribute("listMatkul",listMatkul);
-	    model.addAttribute("linkSubmit", "/lowongan/ubah/submit");
-	    return "lowongan/form-update";
-	}else {
-		model.addAttribute("message", "Gagal! Lowongan tidak ditemukan");
-	    return "lowongan/notif";
-	}
+    Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
+    if(lowongan != null) {
+      List<Matkul> listMatkul = matkulDAO.getMatkul();
+      model.addAttribute("lowongan", lowongan);
+      model.addAttribute("listStatus", Lowongan.LIST_STATUS);
+      model.addAttribute("listMatkul",listMatkul);
+      model.addAttribute("linkSubmit", "/lowongan/ubah/submit");
+      return "lowongan/form-update";
+    }else {
+      model.addAttribute("message", "Gagal! Lowongan tidak ditemukan");
+      return "lowongan/notif";
+    }
   }
 
-  @RequestMapping(value="/ubah/submit", method=RequestMethod.POST)
+  @RequestMapping(value="/ubah/view/{id_lowongan}", method=RequestMethod.POST)
+  public String delete(Model model, @PathVariable(value = "id_lowongan") int id_lowongan) {
+    Lowongan lowongan = lowonganDAO.getLowongan(id_lowongan);
+
+    if(lowongan == null){
+      model.addAttribute("message", "Gagal! Lowongan tidak ditemukan.");
+    } else {
+      lowonganDAO.delete(id_lowongan);
+      Lowongan deleteLowongan = lowonganDAO.getLowongan(id_lowongan);
+
+      if (deleteLowongan == null){
+        model.addAttribute("message", "Sukses! Berhasil menghapus lowongan id " + lowongan.getId());
+      } else {
+        model.addAttribute("message", "Gagal! Lowongan id " + lowongan.getId() + " gagal dihapus.");
+      }
+    }
+    return "lowongan/notif";
+  }
+
+  @RequestMapping(value="/ubah/view/", method=RequestMethod.POST)
   public String updateSubmit(Model model, @ModelAttribute Lowongan lowongan) {
     lowonganDAO.update(lowongan);
     model.addAttribute("message", "Sukses! Berhasil mengubah lowongan");

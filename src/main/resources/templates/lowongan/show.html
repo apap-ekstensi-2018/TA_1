@@ -28,9 +28,9 @@
                 <td>List Dosen</td>
                 <td>
                   <ol>
-                  <li th:each="dosen, i : ${matakuliah.getDosenList()}">
-                    <p th:text="${dosen.getNama()} + ' [ ' + ${dosen.getNip()} + ' ] '">Satrio [12345678]</p>
-                  </li>
+                    <li th:each="dosen, i : ${matakuliah.getDosenList()}">
+                      <p th:text="${dosen.getNama()} + ' [ ' + ${dosen.getNip()} + ' ] '">Satrio [12345678]</p>
+                    </li>
                   </ol>
                 </td>
               </tr>
@@ -42,10 +42,30 @@
                 <td>Jumlah Lowongan</td>
                 <td th:text="${lowongan.jumlah_lowongan}">1</td>
               </tr>
+              <tr>
+                <td>Ruangan</td>
+                <td th:text="${ruang.getNama()}">1</td>
+              </tr>
+              <tr>
+                <td>Kapasitas</td>
+                <td th:text="${ruang.getKapasitas()}">1</td>
+              </tr>
             </tbody>
           </table>
-          <div class="col">
-            <a href='/lowongan/viewall' class="btn btn-secondary float-right">Back</a>
+          <div class="col-lg-3 float-right">
+            <div class="row">
+              <div class=col>
+                <form th:action="${linkDelete}" method="post">
+                  <div>
+                    <input type="hidden" name="id_lowongan" th:value="${lowongan.id}" />
+                    <button type="submit" class="btn btn-danger float-right" name="action" value="submit">Delete</button>
+                  </div>
+                </form>
+              </div>
+              <div class=col>
+                <a href='/lowongan/viewall' class="btn btn-secondary">Back</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

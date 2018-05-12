@@ -33,12 +33,6 @@ public class LowonganDatabase implements LowonganService{
     log.info("get all lowongan available");
     return lowonganMapper.getAllBukaLowongan();
   }
-  
-  @Override
-  public Lowongan delete(int id){
-    log.info("delete lowongan with id {}", id);
-    return lowonganMapper.deleteById(id);
-  }
 
   @Override
   public void insert(Lowongan lowongan) {
@@ -50,6 +44,10 @@ public class LowonganDatabase implements LowonganService{
   public void update(Lowongan lowongan) {
 	log.info("update lowongan dengan id {}", lowongan.getId());
 	lowonganMapper.update(lowongan);
-	
+  }
+
+  @Override
+  public void delete(int id) {
+	lowonganMapper.delete(id);
   }
 }

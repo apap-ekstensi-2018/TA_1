@@ -52,4 +52,7 @@ public interface LowonganMapper {
 		    + "jml_lowongan=#{lowongan.jml_lowongan}"
 		    + " WHERE id=#{lowongan.id}")
   void update(@Param("lowongan") Lowongan lowongan);
+
+  @Delete("DELETE lowongan WHERE id=#{id}")
+  void delete(@Param("lowongan") int id);
 }
