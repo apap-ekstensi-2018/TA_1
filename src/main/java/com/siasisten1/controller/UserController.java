@@ -53,8 +53,6 @@ public class UserController {
       response.sendRedirect("/pengajuan/viewall");
     }
 
-    model.addAttribute("title", "SIASISTEN | LOGIN");
-
     return "login";
   }
 
@@ -63,7 +61,6 @@ public class UserController {
     if (authentication != null) {
       response.sendRedirect("/pengajuan/viewall");
     }
-    model.addAttribute("title", "SIASISTEN | LOGIN");
 
     return "login";
   }

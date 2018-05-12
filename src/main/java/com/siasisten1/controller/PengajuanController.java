@@ -76,8 +76,6 @@ public class PengajuanController {
       {
         PengajuanModel checkPengajuan = pengajuanDAO.checkPengajuan(id_lowongan, username_mahasiswa);
 
-        model.addAttribute("title", "SIASISTEN | Menambahkan Pengajuan");
-
         if(checkPengajuan!=null)
         {
           return "pengajuan/pengajuan-failed";
