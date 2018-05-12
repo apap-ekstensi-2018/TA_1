@@ -19,11 +19,11 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP DATABASE IF EXISTS `si_asisten`;
-
-CREATE DATABASE `si_asisten`;
-
-USE `si_asisten`;
+-- DROP DATABASE IF EXISTS `si_asisten`;
+--
+-- CREATE DATABASE `si_asisten`;
+--
+-- USE `si_asisten`;
 
 # Dump of table lowongan
 # ------------------------------------------------------------
