@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div class="container my-4">
+      <div th:fragment="formLowongan" class="container">
+        <form th:action="@{${linkSubmit}}" method="post" th:object="${lowongan}">
+          <input th:field="*{id}" hidden="true"></input>
+          <div class="form-group">
+            <label for="id_matkul">Mata Kuliah</label>
+            <select id="id_matkul" name="id_matkul" th:field="*{id_matkul}" class="custom-select">
+              <option th:each="matkul : ${listMatkul}" th:attr="selected=(*{id_matkul}==${matkul.getId()})" th:value="${matkul.getId()}" th:text="${matkul.getNama_matkul()}"></option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="is_open">Status</label>
+            <select id="is_open" name="is_open" th:field="*{opened}" class="custom-select">
+              <option th:each="status, i : ${listStatus}" th:attr="selected=(*{opened}==${i.index})" th:value="${i.index}" th:text="${status}"></option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="jml_lowongan">Jumlah lowongan</label>
+            <input type="text" name="jml_lowongan" th:field="*{jumlah_lowongan}" class="form-control"></input>
+          </div>
+
+          <div class="form-group float-right">
+            <button type="submit" class="btn btn-success">Simpan</button>
+            <a href="/lowongan/viewall" class="btn btn-outline-secondary">Back</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

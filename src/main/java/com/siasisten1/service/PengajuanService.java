@@ -13,5 +13,6 @@ public interface PengajuanService {
 	void addPengajuan(PengajuanModel pengajuan);
 	
 	void deletePengajuan(String id_pengajuan);
-
+	
+	void updatePengajuan(String id_pengajuan, int reviewValue);
 }

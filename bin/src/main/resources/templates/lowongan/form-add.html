@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- <div th:replace="shared/header :: navbar"></div> -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css"></link>
+  </head>
+  <body>
+    <div th:replace="shared/header :: navbar"></div>
+    <div class="container my-4">
+      <h2>Tambah Lowongan</h2>
+    </div>
+    <div th:replace="lowongan/_form :: formLowongan"></div>
+
+    <div th:replace="shared/footer :: footer"></div>
+    <script type="text/javascript" charset="utf-8" src="/assets/js/bootstrap.min.js"></script>
+  </body>
+</html>

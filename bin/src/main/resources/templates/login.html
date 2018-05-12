@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="row" style="min-height: 100vh">
+      <div class="col" style="background-image: url('assets/images/background.jpg'); background-size: contain">
+      </div>
+      <div class="col col-lg-4" style="min-height: 100vh">
+        <div class="row align-items-center" style="min-height: 100vh">
+          <div class="col">
+            <div th:if = "${param.error}">
+              Invalid username and password.
+            </div>
+            <form th:action = "@{/login}" method = "post">
+              <h1>
+                Sign In
+              </h1>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" name="username" placeholder="Input a username">
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" id="password" name="password" placeholder="Input a password">
+              </div>
+
+              <div class="form-group float-right">
+                <button class="btn btn-success" type="submit">
+                  Sign in
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="col col-lg-1">
+          </div>
+        </div>
+      </div>
+      <script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+  </body>
+</html>

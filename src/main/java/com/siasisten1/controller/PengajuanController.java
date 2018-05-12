@@ -83,29 +83,12 @@ public class PengajuanController {
 //	        }
 //	    }
 
-	    @RequestMapping(value = "/view/{id_pengajuan}",method = RequestMethod.GET)
-	    public String viewPath (Model model,
-	            @PathVariable(value = "id_pengajuan") String id_pengajuan)
-	    {
-	        PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
-	        model.addAttribute("linkSubmit", "/pengajuan/hapus");
-
-	        if (pengajuan != null) {
-	            model.addAttribute ("pengajuan", pengajuan);
-	            return "pengajuan/viewPengajuan";
-	        } else {
-	            model.addAttribute ("id_pengajuan", id_pengajuan);
-	            return "pengajuan/not-found";
-	        }
-	    }
-
-
 	    @RequestMapping(value = "/viewall",method = RequestMethod.GET)
 	    public String view (Model model)
 	    {
 	        List<PengajuanModel> data_pengajuan = pengajuanDAO.selectAllPengajuan ();
 	        model.addAttribute ("data_pengajuan", data_pengajuan);
-
+	        model.addAttribute("reviewLink", "/pengajuan/review");
 	        return "pengajuan/viewallPengajuan";
 	    }
 
@@ -121,6 +104,31 @@ public class PengajuanController {
 	    		model.addAttribute("id_pengajuan", id_pengajuan);
 	    		return "pengajuan/not-found";
 	    	}
+	    }
+	    
+	    
+	    @RequestMapping(value = "/review", method = RequestMethod.POST)
+	    public String reviewPengajuan(Model model, 
+	    		@RequestParam(value = "id_pengajuan", required = true) String id_pengajuan, 
+	    		@RequestParam(value = "reviewValue", required = true) int reviewValue)
+	    {
+	    		PengajuanModel pengajuan = pengajuanDAO.selectPengajuan(id_pengajuan);
+	    		if(pengajuan != null)
+	    		{
+	    			pengajuanDAO.updatePengajuan(id_pengajuan, reviewValue);
+	    		    System.out.println("Rev Val :" + reviewValue);
+
+	    		    if(reviewValue == 1) {
+	    		    		model.addAttribute("id_pengajuan", id_pengajuan);
+	    		    		return "pengajuan/accepted";
+	    		    }else {
+	    		    		model.addAttribute("id_pengajuan", id_pengajuan);
+	    		    		return "pengajuan/rejected";
+	    		    }
+	    		} else {
+	    			model.addAttribute("id_pengajuan", id_pengajuan);
+	    			return "pengajuan/not-found";
+	    		}
 	    }
 	    
 	    @RequestMapping(value = "/hapus",method = RequestMethod.POST)

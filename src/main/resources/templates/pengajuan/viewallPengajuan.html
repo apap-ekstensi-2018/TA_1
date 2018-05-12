@@ -13,12 +13,13 @@
 				        <table class="table table-bordered table-striped" id="dd">
 					        <thead align="center">
 					            <tr>
-					            	<th><h3>No.</h3></th>
-					                <th><h3>ID</h3></th>
-					                <th><h3>ID Lowongan</h3></th>
-					                <th><h3>Username Mahasiswa</h3></th>
-					                <th><h3>Status Pengajuan</h3></th>	                
-					                <th><h3>Action</h3></th>	                
+					            	<th><a>No.</a></th>
+					                <th><a>ID</a></th>
+					                <th><a>ID Lowongan</a></th>
+					                <th><a>Username Mahasiswa</a></th>
+					                <th><a>Status Pengajuan</a></th>	                
+					                <th><a>Action</a></th>	
+					                <th><a>Review</a></th>                
 					            </tr>
 					        </thead>
 					        <tbody align="center">
@@ -27,10 +28,34 @@
 						        	<td><p th:text="${pengajuan.id}">pengajuan ID</p></td>
 						        	<td><p th:text="${pengajuan.id_lowongan}">pengajuan ID lowongan</p></td>
 						        	<td><p th:text="${pengajuan.username_mahasiswa}">pengajuan Username Mahasiswa</p></td>
-						        	<td><p th:text="${pengajuan.is_accepted}">pengajuan Status</p></td>
-				
+						        	<td>
+						        		<div th:switch="${pengajuan.is_accepted}">
+						        			<p th:case="'2'"><button type="button" class="btn btn-warning" name="action">Pending</button></p>
+						        			<p th:case="'1'"><button type="button" class="btn btn-success" name="action">Disetujui</button></p>
+						        			<p th:case="'0'"><button type="button" class="btn btn-danger" name="action">Ditolak</button></p>
+						        		</div>
+						        		<!-- <p th:text="${pengajuan.is_accepted}">pengajuan Status</p> -->
+						        	</td>
+								
+								
 						        	<td><a th:href="'/pengajuan/view/' + ${pengajuan.id}">
 						        	<button type="button" class="btn btn-danger" name="action">Detail</button></a> </td>
+						        
+						        <td>
+						        <!-- <a th:href="'/review/' + ${pengajuan.id}"> -->
+						        <form th:action="@{${reviewLink}}"  method="post">
+						        		<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 0/>
+						        		<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
+						        		<button type="submit" class="btn btn-danger" name="action">Tolak</button>
+						        	</form>
+						        	
+						        	<!-- <a th:href="'/review/' + ${pengajuan.id}"> -->
+						        	<form th:action="@{${reviewLink}}"  method="post">
+						        		<input class="form-control" type="text" name="reviewValue" th:required="true" hidden="true" value = 1/>
+						        		<input class="form-control" type="text" name="id_pengajuan" th:required="true" hidden="true" th:value="${pengajuan.id}"/>
+						        		<button type="submit" class="btn btn-success" name="action">Setujui</button>
+						        </form>
+						        </td>
 						        </tr>
 					        </tbody>
 					    </table>

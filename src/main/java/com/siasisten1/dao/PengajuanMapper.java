@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.siasisten1.model.PengajuanModel;
 
@@ -25,4 +26,8 @@ public interface PengajuanMapper {
     @Delete("DELETE FROM Pengajuan WHERE id = #{id}")
     void deletePengajuan(@Param("id") String id_pengajuan);
     
+    @Update("UPDATE PENGAJUAN SET "
+			+ "is_accepted=#{reviewValue}"
+			+ " WHERE id = #{id}")
+void updatePengajuan(@Param("id") String id_pengajuan, @Param("reviewValue") int reviewValue);
 }
