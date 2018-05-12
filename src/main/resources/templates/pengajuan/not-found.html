@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>ID Pengajuan not found</title>
-    </head>
-    <body>
-    	<h1>Student not found</h1>
-       	<h3 th:text="'ID Pengajuan = ' + ${id_pengajuan}">ID Pengajuan</h3>
-    </body>
+  <head>
+    <title>Pengajuan telah disetuji</title>
+  </head>
+  <body>
+    <h1>Student not found</h1>
+    <h3 th:text="'ID Pengajuan = ' + ${id_pengajuan}">ID Pengajuan</h3>
+    <div th:replace="shared/footer :: footer"></div>
+  </body>
 </html>
