@@ -13,14 +13,12 @@ public class Lowongan
   public static final String[] LIST_STATUS  = {"Ditutup", "Dibuka"};
   private int id;
   private int id_matkul;
-  private int is_open;
+  private int opened;
   private int jumlah_lowongan;
 
-  private boolean opened;
-
   public String getStatus() {
-    System.out.println(is_open);
-    return opened ? "Buka" : "Tutup";
+    System.out.println(opened);
+    return opened==1 ? "Buka" : "Tutup";
   }
 
   public int getIdMatkul(){

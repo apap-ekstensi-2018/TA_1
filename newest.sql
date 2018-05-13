@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `lowongan`;
 CREATE TABLE `lowongan` (
   `id` int(11) NOT NULL,
   `id_matkul` int(11) NOT NULL,
-  `is_open` tinyint(1) NOT NULL,
+  `opened` tinyint(1) NOT NULL,
   `jumlah_lowongan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -32,7 +32,7 @@ CREATE TABLE `lowongan` (
 -- Dumping data for table `lowongan`
 --
 
-INSERT INTO `lowongan` (`id`, `id_matkul`, `is_open`, `jumlah_lowongan`) VALUES
+INSERT INTO `lowongan` (`id`, `id_matkul`, `opened`, `jumlah_lowongan`) VALUES
 (1, 1, 1, 2),
 (2, 18, 1, 3),
 (3, 2, 0, 9),
