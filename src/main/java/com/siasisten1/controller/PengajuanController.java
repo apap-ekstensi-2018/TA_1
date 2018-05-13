@@ -264,7 +264,7 @@ public class PengajuanController {
         PengajuanModel pengajuan = pengajuanDAO.selectPengajuan (id_pengajuan);
         if(pengajuan != null)
         {
-          if(is_accepted.equals("2")) {
+          if(is_accepted.equals("2") || is_accepted.equals("0")) {
             pengajuanDAO.deletePengajuan(id_pengajuan);
             return "pengajuan/delete";
           }else {
