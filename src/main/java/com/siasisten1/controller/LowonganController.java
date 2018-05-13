@@ -126,12 +126,13 @@ public class LowonganController {
       lowonganDAO.delete(id_lowongan);
       Lowongan deleteLowongan = lowonganDAO.getLowongan(id_lowongan);
 
-      if (deleteLowongan == null){
-        model.addAttribute("title", "SIASISTEN | Berhasil Mengubah Lowongan");
-        model.addAttribute("message", "Sukses! Berhasil menghapus lowongan id " + lowongan.getId());
-      } else {
+      System.out.println(deleteLowongan.getDeleted_at());
+      if (deleteLowongan.getDeleted_at() == null){
         model.addAttribute("title", "SIASISTEN | Gagal Mengubah Lowongan");
         model.addAttribute("message", "Gagal! Lowongan id " + lowongan.getId() + " gagal dihapus.");
+      } else {
+        model.addAttribute("title", "SIASISTEN | Berhasil Mengubah Lowongan");
+        model.addAttribute("message", "Sukses! Berhasil menghapus lowongan id " + lowongan.getId());
       }
     }
     return "lowongan/notif";

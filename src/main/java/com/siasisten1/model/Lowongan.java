@@ -3,6 +3,7 @@ package com.siasisten1.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +16,7 @@ public class Lowongan
   private int id_matkul;
   private int opened;
   private int jumlah_lowongan;
+  private Timestamp deleted_at;
 
   public String getStatus() {
     System.out.println(opened);

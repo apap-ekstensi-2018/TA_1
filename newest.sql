@@ -22,10 +22,13 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `lowongan`;
 CREATE TABLE `lowongan` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_matkul` int(11) NOT NULL,
   `opened` tinyint(1) NOT NULL,
-  `jumlah_lowongan` int(11) NOT NULL
+  `jumlah_lowongan` int(11) NOT NULL,
+  `deleted_at` TIMESTAMP NULL
+  PRIMARY KEY (`id`),
+  KEY `active_index` (`deleted_at`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

@@ -15,7 +15,7 @@ import com.siasisten1.model.Lowongan;
 
 @Mapper
 public interface LowonganMapper {
-  @Select("SELECT * FROM lowongan")
+  @Select("SELECT * FROM lowongan WHERE deleted_at IS NULL")
   @Results(value = {
     @Result(property="id", column="id"),
     @Result(property="opened", column="opened"),
@@ -23,7 +23,7 @@ public interface LowonganMapper {
   })
   List<Lowongan> getAllLowongan();
 
-  @Select("SELECT * FROM lowongan WHERE opened = 1")
+  @Select("SELECT * FROM lowongan WHERE opened = 1 AND deleted_at IS NULL")
   List<Lowongan> getAllBukaLowongan();
 
   @Select("SELECT * FROM lowongan WHERE id = #{id}")
@@ -34,9 +34,6 @@ public interface LowonganMapper {
     @Result(property="jumlah_lowongan", column="jumlah_lowongan")
   })
   Lowongan findById(int id);
-
-  @Delete("DELETE lowongan WHERE id = #{id}")
-  Lowongan deleteById(int id);
 
   @Insert("INSERT INTO lowongan (id_matkul, opened, jumlah_lowongan) VALUES ("
 		    + "#{lowongan.id_matkul},"
@@ -49,13 +46,13 @@ public interface LowonganMapper {
 		    + "opened=#{lowongan.opened},"
 		    + "jumlah_lowongan=#{lowongan.jumlah_lowongan}"
 		    + " WHERE id=#{lowongan.id}")
-  
+
   void update(@Param("lowongan") Lowongan lowongan);
 
-  @Delete("DELETE FROM lowongan WHERE id=#{id}")
+  @Delete("UPDATE lowongan SET deleted_at=CURRENT_TIMESTAMP() WHERE id=#{id}")
   void delete(@Param("id") int id);
-  
+
   @Select("select * from lowongan where id_matkul= #{id_matkul}")
   Lowongan isMatkulDosen(@Param("id_matkul") int id_matkul);
-  
+
 }
