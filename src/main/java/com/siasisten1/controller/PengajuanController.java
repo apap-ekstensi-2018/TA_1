@@ -118,7 +118,7 @@ public class PengajuanController {
   @RequestMapping(value = "/viewall",method = RequestMethod.GET)
   public String view (Model model, HttpServletRequest request)
   {
-        model.addAttribute("title", "SIASISTEN | Melihat Semua Pengajuan");
+    model.addAttribute("title", "SIASISTEN | Melihat Semua Pengajuan");
     model.addAttribute("reviewLink", "/pengajuan/review");
 
     String namaMatkul;
@@ -200,7 +200,7 @@ public class PengajuanController {
       HttpServletRequest request)
   {
     PengajuanModel pengajuan1 = pengajuanDAO.selectPengajuan(id_pengajuan);
-        model.addAttribute("title", "SIASISTEN | Menreview Pengajuan");
+        model.addAttribute("title", "SIASISTEN | Mereview Pengajuan");
     if(pengajuan1 != null)
     {
       String namaMatkul;

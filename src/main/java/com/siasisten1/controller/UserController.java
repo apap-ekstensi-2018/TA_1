@@ -90,11 +90,12 @@ public class UserController {
 		@RequestMapping("/daftarmatkul")
 		public String getMatkul(Model model,HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException 
 		{
-			model.addAttribute("title", "SIASISTEN | Daftar Mata Kuliah");
+			
 			if(request.isUserInRole("ROLE_ADMIN")){
 				Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
 				List<Matkul> matkulsResult = dosen.getMataKuliahList();
 				model.addAttribute("matkuls", matkulsResult);
+				model.addAttribute("title", "SIASISTEN | Daftar Mata Kuliah");
 				return "asdos/daftarmatkul";
 			}else {
 				List<Integer> ids = asdosDAO.selectMatkulAsdos(request.getRemoteUser());
@@ -107,7 +108,8 @@ public class UserController {
 						}
 					}
 				}
-			
+				
+				model.addAttribute("title", "SIASISTEN | Daftar Mata Kuliah");
 				model.addAttribute("matkuls", matkulsResult);
 				return "asdos/daftarmatkul";
 			}
