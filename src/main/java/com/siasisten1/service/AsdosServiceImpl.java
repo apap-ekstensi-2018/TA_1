@@ -24,12 +24,10 @@ public class AsdosServiceImpl implements AsdosService{
 	
 	@Override
 	public boolean isAsdos(String npm) {
-		// TODO Auto-generated method stub
 		log.info("check if "+ npm +" is asdos");
-		if(asdosMapper.isAsdos(npm) !=null)
+		if(asdosMapper.isAsdos(npm) > 0)
 			return true;
 		else
-			System.out.println("masukkkkkksiniiiii=====");
 			return false;
 	}
 	

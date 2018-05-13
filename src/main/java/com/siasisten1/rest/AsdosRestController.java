@@ -2,6 +2,7 @@ package com.siasisten1.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +22,9 @@ public class AsdosRestController {
 	@Autowired
 	MahasiswaService mahasiswaDAO;
 	
-	@RequestMapping(value="/asisten-dosen/cek-status", method = RequestMethod.GET)
+	@RequestMapping(value="/asisten-dosen/cek-status/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseTransfer isAsdos (@RequestParam(value = "id", required = true) int id)
+	public ResponseTransfer isAsdos (@PathVariable(value = "id", required = true) int id)
     {
 		Mahasiswa mahasiswa = mahasiswaDAO.getMahasiswaById(id);
 		if(mahasiswa != null) {

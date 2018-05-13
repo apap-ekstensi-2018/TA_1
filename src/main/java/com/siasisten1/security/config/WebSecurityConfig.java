@@ -31,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
       .authorizeRequests()
       .antMatchers("/").permitAll()
       .antMatchers("/assets/**").permitAll()
+      .antMatchers("/asisten-dosen/cek-status/**").permitAll()
       .antMatchers("/lowongan/tambah").hasAuthority("ROLE_ADMIN")
       .antMatchers("/lowongan/tambah/").hasAuthority("ROLE_ADMIN")
       .antMatchers("/lowongan/ubah/**").hasAuthority("ROLE_ADMIN")
