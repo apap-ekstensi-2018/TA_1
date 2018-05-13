@@ -74,6 +74,7 @@ public class UserController {
 		public String getAsdosMataKuliah(Model model, 
 				@PathVariable(value = "id_mataKuliah") int id_mataKuliah) throws IOException
 		{	
+			model.addAttribute("title", "SIASISTEN | Lihat Asisten Mata Kuliah");
 			List<String> listNPM = asdosDAO.selectMataKuliahDiPegang(id_mataKuliah);
 			List<Mahasiswa> listMahasiswa = new ArrayList<>();
 						
@@ -89,6 +90,7 @@ public class UserController {
 		@RequestMapping("/daftarmatkul")
 		public String getMatkul(Model model,HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException 
 		{
+			model.addAttribute("title", "SIASISTEN | Daftar Mata Kuliah");
 			if(request.isUserInRole("ROLE_ADMIN")){
 				Dosen dosen = dosenDAO.getDosen(request.getRemoteUser());
 				List<Matkul> matkulsResult = dosen.getMataKuliahList();
