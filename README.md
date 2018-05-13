@@ -56,6 +56,7 @@ You should configure your project to build a jar or war (as appropriate) by usin
 - [x] Menghapus pengajuan menjadi asisten dosen
 - [x] Mereview lowongan menjadi asisten dosen
 - [x] Melihat list asisten dosen mata kuliah terkait
+- [x] API untuk status asisten dosen
 
 ## Important links
 - [Rest Cheatsheet](https://github.com/RestCheatSheet/api-cheat-sheet#api-design-cheat-sheet)
