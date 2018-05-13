@@ -22,9 +22,9 @@ public class AsdosRestController {
 	@Autowired
 	MahasiswaService mahasiswaDAO;
 	
-	@RequestMapping(value="/asisten-dosen/cek-status/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/asisten-dosen/cek-status", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseTransfer isAsdos (@PathVariable(value = "id", required = true) int id)
+	public ResponseTransfer isAsdos (@RequestParam(value = "id", required = true) int id)
     {
 		Mahasiswa mahasiswa = mahasiswaDAO.getMahasiswaById(id);
 		if(mahasiswa != null) {
