@@ -8,32 +8,29 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.mapping.FetchType;
 
 import com.siasisten1.model.Lowongan;
-import com.siasisten1.model.PengajuanModel;
 
 @Mapper
 public interface LowonganMapper {
   @Select("SELECT * FROM lowongan")
   @Results(value = {
     @Result(property="id", column="id"),
-    @Result(property="opened", column="is_open"),
+    @Result(property="opened", column="opened"),
     @Result(property="jumlah_lowongan", column="jumlah_lowongan")
   })
   List<Lowongan> getAllLowongan();
 
-  @Select("SELECT * FROM lowongan WHERE is_open = 1")
+  @Select("SELECT * FROM lowongan WHERE opened = 1")
   List<Lowongan> getAllBukaLowongan();
 
   @Select("SELECT * FROM lowongan WHERE id = #{id}")
   @Results(value = {
     @Result(property="id", column="id"),
     @Result(property="id_matkul", column="id_matkul"),
-    @Result(property="opened", column="is_open"),
+    @Result(property="opened", column="opened"),
     @Result(property="jumlah_lowongan", column="jumlah_lowongan")
   })
   Lowongan findById(int id);
@@ -41,15 +38,15 @@ public interface LowonganMapper {
   @Delete("DELETE lowongan WHERE id = #{id}")
   Lowongan deleteById(int id);
 
-  @Insert("INSERT INTO lowongan (id_matkul, is_open, jumlah_lowongan) VALUES ("
+  @Insert("INSERT INTO lowongan (id_matkul, opened, jumlah_lowongan) VALUES ("
 		    + "#{lowongan.id_matkul},"
-		    + "#{lowongan.is_open},"
+		    + "#{lowongan.opened},"
 		    + "#{lowongan.jumlah_lowongan})")
   void insert(@Param("lowongan") Lowongan lowongan);
 
   @Update("UPDATE lowongan SET "
 		    + "id_matkul=#{lowongan.id_matkul},"
-		    + "is_open=#{lowongan.is_open},"
+		    + "opened=#{lowongan.opened},"
 		    + "jumlah_lowongan=#{lowongan.jumlah_lowongan}"
 		    + " WHERE id=#{lowongan.id}")
   
