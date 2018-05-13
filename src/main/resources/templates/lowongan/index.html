@@ -23,10 +23,10 @@
           </tr>
         </thead>
         <tbody align="center">
-          <tr th:each="lowongan, iterationStatus: ${lowongans}" th:class="${iterationStatus.odd} ? 'odd text-left' : 'text-left'">
+          <tr th:each="lowongan, iterationStatus: ${lowongans}">
             <td th:text="${iterationStatus.count}">1</td>
             <td th:text="${matkuls.get(lowongan.getIdMatkul()).getNama_matkul()}" class="text-left">APAP</td>
-            <td th:text="${lowongan.jumlah_lowongan}" class="text-left">0</td>
+            <td th:text="${lowongan.jumlah_lowongan}">0</td>
             <td>
               <a th:href="'/lowongan/ubah/' + ${lowongan.getId()}" th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}" class="btn btn-light mx-2 float-right">Edit</a>
               <a th:href="'/lowongan/view/' + ${lowongan.getId()}" class="btn btn-secondary mx-2 float-right">Detail</a>

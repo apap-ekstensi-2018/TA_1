@@ -56,7 +56,7 @@
             <div class="row">
               <div class=col>
                 <form th:action="${linkDelete}" method="post">
-                  <div>
+                  <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
                     <input type="hidden" name="id_lowongan" th:value="${lowongan.id}" />
                     <button type="submit" class="btn btn-danger float-right" name="action" value="submit">Delete</button>
                   </div>
